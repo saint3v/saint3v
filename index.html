@@ -7,12 +7,12 @@
 
   <style>
     :root {
-      --bg-gradient: linear-gradient(135deg, #1e1e2e, #2c2c3e, #3a3a4e);
       --panel: rgba(255, 255, 255, 0.05);
       --text: #f0f0f8;
       --muted: #c0c0d0;
       --accent: #a1c4fd;
-      --radius: 16px;
+      --radius: 12px;
+      --font-main: 'Arial', sans-serif;
     }
 
     * {
@@ -22,8 +22,7 @@
     }
 
     body {
-      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-      background: var(--bg-gradient);
+      font-family: var(--font-main);
       color: var(--text);
       min-height: 100vh;
       display: flex;
@@ -31,7 +30,18 @@
       align-items: center;
       overflow: hidden;
       position: relative;
+      background: #1e1e2e;
+    }
+
+    /* Gradient overlay workaround for Safari/iPhone */
+    body::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: linear-gradient(135deg, #1e1e2e, #2c2c3e, #3a3a4e, #1e1e2e);
       background-size: 400% 400%;
+      z-index: 0;
       animation: gradientShift 15s ease infinite;
     }
 
@@ -44,19 +54,18 @@
     /* Particle container */
     .particles {
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
       pointer-events: none;
       overflow: hidden;
+      z-index: 0;
     }
 
     .particle {
       position: absolute;
-      width: 6px;
-      height: 6px;
-      background: rgba(161, 196, 253, 0.6);
+      width: 5px;
+      height: 5px;
+      background: rgba(161, 196, 253, 0.5);
       border-radius: 50%;
       animation: floatParticle linear infinite;
     }
@@ -69,8 +78,8 @@
 
     .container {
       width: 100%;
-      max-width: 520px;
-      padding: 40px 20px;
+      max-width: 480px;
+      padding: 30px 20px;
       text-align: center;
       position: relative;
       z-index: 1;
@@ -78,19 +87,20 @@
 
     h1 {
       font-weight: 500;
-      font-size: 2rem;
-      margin-bottom: 30px;
+      font-size: 1.8rem;
+      margin-bottom: 20px;
       letter-spacing: 0.5px;
-      text-shadow: 0 2px 12px rgba(161, 196, 253, 0.4);
+      text-shadow: 0 1px 8px rgba(161, 196, 253, 0.3);
+      line-height: 1.2;
     }
 
     .album-cover {
       width: 100%;
-      max-width: 400px;
-      border-radius: 16px;
-      margin: 0 auto 30px auto;
-      box-shadow: 0 8px 30px rgba(0,0,0,0.5);
-      transition: transform 0.3s ease;
+      max-width: 360px;
+      border-radius: var(--radius);
+      margin: 0 auto 25px auto;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+      transition: transform 0.25s ease;
     }
 
     .album-cover:hover {
@@ -100,53 +110,53 @@
     .track {
       background: var(--panel);
       border-radius: var(--radius);
-      padding: 24px;
-      margin-bottom: 24px;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
-      transition: transform 0.25s ease, box-shadow 0.25s ease;
-      backdrop-filter: blur(12px);
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(10px);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
 
     .track:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.5);
     }
 
     .track-title {
-      font-size: 1.1rem;
+      font-size: 1rem;
       color: var(--muted);
-      margin-bottom: 16px;
+      margin-bottom: 12px;
     }
 
     audio {
       width: 100%;
       outline: none;
-      border-radius: 12px;
-      filter: invert(92%) sepia(8%) saturate(20%) hue-rotate(190deg);
+      border-radius: 10px;
+      filter: invert(90%) sepia(5%) saturate(15%) hue-rotate(190deg);
     }
 
     footer {
-      margin-top: 40px;
-      font-size: 0.8rem;
+      margin-top: 30px;
+      font-size: 0.75rem;
       color: var(--muted);
       opacity: 0.7;
     }
 
-    @media (max-width: 480px) {
-      h1 {
-        font-size: 1.5rem;
-      }
+    @media (max-width: 400px) {
+      h1 { font-size: 1.4rem; }
+      .album-cover { max-width: 300px; }
     }
   </style>
 </head>
 <body>
-  <!-- Particle background -->
+
+  <!-- Particles -->
   <div class="particles"></div>
 
   <div class="container">
     <h1>SAINT3V - October 23rd</h1>
 
-    <img src="oct23coverart.jpeg" alt="October 23rd Album Cover" class="album-cover">
+    <img src="oct23overart.jpeg" alt="October 23rd Album Cover" class="album-cover">
 
     <div class="track">
       <div class="track-title">October 23rd</div>
@@ -157,19 +167,19 @@
     </div>
 
     <footer>
-      © 2025 SAINT3V | Indie Rock / Lo-Fi Angelic Vibes
+      © 2025 SAINT3V | Indie Rock Artist
     </footer>
   </div>
 
   <script>
     // Generate floating particles
     const particleContainer = document.querySelector('.particles');
-    const particleCount = 50; // number of floating lights
+    const particleCount = 50;
 
     for (let i = 0; i < particleCount; i++) {
       const particle = document.createElement('div');
       particle.classList.add('particle');
-      const size = Math.random() * 4 + 2; // 2px - 6px
+      const size = Math.random() * 4 + 2;
       particle.style.width = `${size}px`;
       particle.style.height = `${size}px`;
       particle.style.left = `${Math.random() * 100}%`;
@@ -178,5 +188,7 @@
       particleContainer.appendChild(particle);
     }
   </script>
+
 </body>
 </html>
+
