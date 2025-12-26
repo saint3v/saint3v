@@ -1,81 +1,119 @@
-#! This is my music portfolio
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>My Music</title>
+  <title>My Music - SAINT3V</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <!-- Lo-fi / Angelic aesthetic styles -->
   <style>
+    :root {
+      --bg-gradient: linear-gradient(135deg, #1e1e2e, #2c2c3e, #3a3a4e);
+      --panel: rgba(255, 255, 255, 0.05);
+      --text: #f0f0f8;
+      --muted: #c0c0d0;
+      --accent: #a1c4fd;
+      --radius: 16px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-      background: #0f0f0f;
-      color: #f2f2f2;
+      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-gradient);
+      color: var(--text);
+      min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      min-height: 100vh;
+      padding: 0 12px;
+      background-size: 400% 400%;
+      animation: gradientShift 15s ease infinite;
+    }
+
+    @keyframes gradientShift {
+      0% {background-position: 0% 50%;}
+      50% {background-position: 100% 50%;}
+      100% {background-position: 0% 50%;}
     }
 
     .container {
       width: 100%;
-      max-width: 600px;
-      padding: 24px;
+      max-width: 520px;
+      padding: 40px 20px;
+      text-align: center;
     }
 
     h1 {
       font-weight: 500;
-      margin-bottom: 24px;
-      text-align: center;
+      font-size: 2rem;
+      margin-bottom: 30px;
+      letter-spacing: 0.5px;
+      text-shadow: 0 2px 12px rgba(161, 196, 253, 0.4);
     }
 
     .track {
-      margin-bottom: 20px;
-      padding: 16px;
-      border-radius: 10px;
-      background: #1a1a1a;
+      background: var(--panel);
+      border-radius: var(--radius);
+      padding: 24px;
+      margin-bottom: 24px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      backdrop-filter: blur(12px);
+    }
+
+    .track:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6);
     }
 
     .track-title {
-      margin-bottom: 8px;
-      font-size: 0.95rem;
-      opacity: 0.85;
+      font-size: 1.1rem;
+      color: var(--muted);
+      margin-bottom: 16px;
     }
 
     audio {
       width: 100%;
+      outline: none;
+      border-radius: 12px;
+      filter: invert(92%) sepia(8%) saturate(20%) hue-rotate(190deg);
+    }
+
+    footer {
+      margin-top: 40px;
+      font-size: 0.8rem;
+      color: var(--muted);
+      opacity: 0.7;
+    }
+
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 1.5rem;
+      }
     }
   </style>
 </head>
-<body>
 
+<body>
   <div class="container">
-    <h1>My Music</h1>
+    <h1>SAINT3V - October 23rd</h1>
 
     <div class="track">
-      <div class="track-title">Track 01</div>
+      <div class="track-title">October 23rd</div>
       <audio controls preload="none">
-        <source src="audio/track1.mp3" type="audio/mpeg">
+        <source src="October_23rdmp3.mp3" type="audio/mpeg">
         Your browser does not support the audio element.
       </audio>
     </div>
 
-    <div class="track">
-      <div class="track-title">Track 02</div>
-      <audio controls preload="none">
-        <source src="audio/track2.mp3" type="audio/mpeg">
-      </audio>
-    </div>
-
-    <div class="track">
-      <div class="track-title">Track 03</div>
-      <audio controls preload="none">
-        <source src="audio/track3.mp3" type="audio/mpeg">
-      </audio>
-    </div>
-
+    <footer>
+      © 2025 SAINT3V | Indie Rock / Lo-Fi Vibes
+    </footer>
   </div>
-
 </body>
 </html>
+
