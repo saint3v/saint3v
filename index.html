@@ -1,1 +1,81 @@
 #! This is my music portfolio
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>My Music</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #0f0f0f;
+      color: #f2f2f2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 600px;
+      padding: 24px;
+    }
+
+    h1 {
+      font-weight: 500;
+      margin-bottom: 24px;
+      text-align: center;
+    }
+
+    .track {
+      margin-bottom: 20px;
+      padding: 16px;
+      border-radius: 10px;
+      background: #1a1a1a;
+    }
+
+    .track-title {
+      margin-bottom: 8px;
+      font-size: 0.95rem;
+      opacity: 0.85;
+    }
+
+    audio {
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>My Music</h1>
+
+    <div class="track">
+      <div class="track-title">Track 01</div>
+      <audio controls preload="none">
+        <source src="audio/track1.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+      </audio>
+    </div>
+
+    <div class="track">
+      <div class="track-title">Track 02</div>
+      <audio controls preload="none">
+        <source src="audio/track2.mp3" type="audio/mpeg">
+      </audio>
+    </div>
+
+    <div class="track">
+      <div class="track-title">Track 03</div>
+      <audio controls preload="none">
+        <source src="audio/track3.mp3" type="audio/mpeg">
+      </audio>
+    </div>
+
+  </div>
+
+</body>
+</html>
