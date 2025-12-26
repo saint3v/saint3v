@@ -2,10 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>My Music - SAINT3V</title>
+  <title>SAINT3V - October 23rd</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Lo-fi / Angelic aesthetic styles -->
   <style>
     :root {
       --bg-gradient: linear-gradient(135deg, #1e1e2e, #2c2c3e, #3a3a4e);
@@ -18,10 +17,11 @@
 
     * {
       box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
 
     body {
-      margin: 0;
       font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
       background: var(--bg-gradient);
       color: var(--text);
@@ -29,7 +29,8 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 0 12px;
+      overflow: hidden;
+      position: relative;
       background-size: 400% 400%;
       animation: gradientShift 15s ease infinite;
     }
@@ -40,11 +41,39 @@
       100% {background-position: 0% 50%;}
     }
 
+    /* Particle container */
+    .particles {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .particle {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      background: rgba(161, 196, 253, 0.6);
+      border-radius: 50%;
+      animation: floatParticle linear infinite;
+    }
+
+    @keyframes floatParticle {
+      0% { transform: translateY(100vh) scale(0.5); opacity: 0; }
+      10% { opacity: 1; }
+      100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+    }
+
     .container {
       width: 100%;
       max-width: 520px;
       padding: 40px 20px;
       text-align: center;
+      position: relative;
+      z-index: 1;
     }
 
     h1 {
@@ -53,6 +82,19 @@
       margin-bottom: 30px;
       letter-spacing: 0.5px;
       text-shadow: 0 2px 12px rgba(161, 196, 253, 0.4);
+    }
+
+    .album-cover {
+      width: 100%;
+      max-width: 400px;
+      border-radius: 16px;
+      margin: 0 auto 30px auto;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+      transition: transform 0.3s ease;
+    }
+
+    .album-cover:hover {
+      transform: scale(1.02);
     }
 
     .track {
@@ -97,10 +139,14 @@
     }
   </style>
 </head>
-
 <body>
+  <!-- Particle background -->
+  <div class="particles"></div>
+
   <div class="container">
     <h1>SAINT3V - October 23rd</h1>
+
+    <img src="oct23overart.jpeg" alt="October 23rd Album Cover" class="album-cover">
 
     <div class="track">
       <div class="track-title">October 23rd</div>
@@ -111,9 +157,26 @@
     </div>
 
     <footer>
-      © 2025 SAINT3V | Indie Rock / Lo-Fi Vibes
+      © 2025 SAINT3V | Indie Rock / Lo-Fi Angelic Vibes
     </footer>
   </div>
+
+  <script>
+    // Generate floating particles
+    const particleContainer = document.querySelector('.particles');
+    const particleCount = 50; // number of floating lights
+
+    for (let i = 0; i < particleCount; i++) {
+      const particle = document.createElement('div');
+      particle.classList.add('particle');
+      const size = Math.random() * 4 + 2; // 2px - 6px
+      particle.style.width = `${size}px`;
+      particle.style.height = `${size}px`;
+      particle.style.left = `${Math.random() * 100}%`;
+      particle.style.animationDuration = `${5 + Math.random() * 10}s`;
+      particle.style.animationDelay = `${Math.random() * 10}s`;
+      particleContainer.appendChild(particle);
+    }
+  </script>
 </body>
 </html>
-
