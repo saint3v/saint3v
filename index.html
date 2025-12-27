@@ -146,6 +146,23 @@
       h1 { font-size: 1.4rem; }
       .album-cover { max-width: 300px; }
     }
+
+    .ghost-counter {
+      position: fixed;
+      bottom: 10px;
+      right: 12px;
+      opacity: 0.35;
+      transform: scale(0.55);
+      transform-origin: bottom right;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .ghost-counter img {
+      display: block;
+      filter: grayscale(100%) brightness(0.9);
+    }
+
   </style>
 </head>
 <body>
@@ -189,6 +206,13 @@
       particleContainer.appendChild(particle);
     }
   </script>
+<!-- Ghost visitor counter -->
+<div class="ghost-counter">
+  <img
+    src="https://hitscounter.dev/api/hit?url=https%3A%2F%2Fsdvantage.com%2F&label=Visitors&icon=person-raised-hand&color=%233d8bfd&message=&style=plastic&tz=US%2FPacific"
+    alt="Visitor counter"
+  >
+</div>
 
 </body>
 </html>
