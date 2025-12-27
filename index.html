@@ -240,6 +240,35 @@
       particle.style.animationDelay = `${Math.random() * 10}s`;
       particleContainer.appendChild(particle);
     }
+
+    const tracks = document.querySelectorAll('.track audio');
+
+    tracks.forEach(audio => {
+      audio.addEventListener('play', () => {
+        // Stop other tracks
+        tracks.forEach(a => {
+          if (a !== audio) a.pause();
+        });
+
+        // Get vibe
+        const vibe = audio.closest('.track').dataset.vibe;
+
+        // Reset body classes
+        document.body.classList.remove('ethereal', 'street');
+
+        // Apply new vibe
+        if (vibe) {
+          document.body.classList.add(vibe);
+        }
+      });
+
+      audio.addEventListener('pause', () => {
+        if ([...tracks].every(a => a.paused)) {
+          document.body.classList.remove('street');
+        }
+      });
+    });
+    
   </script>
 <!-- Ghost visitor counter -->
 <div class="ghost-counter">
