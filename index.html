@@ -53,18 +53,24 @@ body {
 }
 
 /* ==========================
-   BACKGROUND GRADIENT (slit-ray version)
+   BACKGROUND GRADIENT (slit-ray + night sky)
 ========================== */
 body::before {
   content:'';
   position:absolute; inset:0;
   background: linear-gradient(135deg,
-    #1e1e2e 0%, #2c2c3e 48%,
-    #7a7aa0 50%, #1e1e2e 52%, #3a3a4e 100%);
+    #0d0d1a 0%,       /* deep night-blue edge */
+    #1e1e2e 25%,      /* your original dark tone */
+    #2c2c3e 48%,      /* mid-dark gray/blue */
+    #7a7aa0 50%,      /* 2% bright slit in the middle */
+    #1e1e2e 52%,      /* back to mid-dark */
+    #3a3a4e 75%,      /* mid-dark gray/blue */
+    #0b0b1f 100%);    /* another deep blue edge */
   background-size: 400% 400%;
   z-index:0;
   animation: gradientShift 17s linear infinite;
 }
+
 @keyframes gradientShift {
   0%   { background-position: 0% 0%; }
   50%  { background-position: 100% 100%; }
