@@ -172,6 +172,32 @@
         drop-shadow(0 0 14px rgba(161, 196, 253, 0.15));
     }
 
+    /* STREET / RAP MODE */
+    body.street::before {
+      background:
+        linear-gradient(
+          rgba(0,0,0,0.6),
+          rgba(0,0,0,0.6)
+        ),
+        url("graffiti-bg.jpg");
+      background-size: cover;
+      background-position: center;
+      animation: none;
+    }
+
+    /* Change glow tone slightly in street mode */
+    body.street h1 {
+      color: #dbe7ff;
+      text-shadow:
+        0 0 4px rgba(120, 160, 255, 0.4),
+        0 0 10px rgba(120, 160, 255, 0.2);
+    }
+
+    /* Particles become subtle dust */
+    body.street .particle {
+      background: rgba(200, 200, 200, 0.2);
+    }
+    
   </style>
 </head>
 <body>
