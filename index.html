@@ -1,271 +1,386 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>SAINT3V - October 23rd</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<title>SAINT3V - October 23rd</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    :root {
-      --panel: rgba(255, 255, 255, 0.05);
-      --text: #f0f0f8;
-      --muted: #c0c0d0;
-      --accent: #a8c7ff;
-      --radius: 12px;
-      --font-main: 'Arial', sans-serif;
-    }
+<style>
+:root {
+  --panel: rgba(255, 255, 255, 0.05);
+  --text: #f0f0f8;
+  --muted: #c0c0d0;
+  --accent: #a1c4fd;
+  --radius: 12px;
+  --font-main: 'Arial', sans-serif;
+}
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+* { box-sizing: border-box; margin:0; padding:0; }
 
-    body {
-      font-family: var(--font-main);
-      color: var(--text);
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: #1e1e2e;
-      overflow-y: auto;
-      position: relative;
-    }
+body {
+  font-family: var(--font-main);
+  color: var(--text);
+  min-height: 100vh;
+  position: relative;
+  background: #1e1e2e;
+  overflow: hidden;
+}
 
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background: linear-gradient(135deg, #1e1e2e, #2c2c3e, #3a3a4e);
-      background-size: 400% 400%;
-      animation: gradientShift 18s ease infinite;
-      z-index: -2;
-    }
+.scroll-wrapper {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  min-height: 100vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
 
-    @keyframes gradientShift {
-      0% {background-position: 0% 50%;}
-      50% {background-position: 100% 50%;}
-      100% {background-position: 0% 50%;}
-    }
+.container {
+  width: 100%;
+  max-width: 480px;
+  padding: 30px 20px;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
 
-    body.street::before {
-      background: url("graffiti-bg.jpg") center/cover no-repeat;
-      animation: none;
-    }
+/* ===== BACKGROUND ===== */
+body::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #1e1e2e, #2c2c3e, #3a3a4e, #1e1e2e);
+  background-size: 400% 400%;
+  z-index:0;
+  animation: gradientShift 15s ease infinite;
+}
 
-    .particles {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: -1;
-    }
+@keyframes gradientShift {
+  0% {background-position: 0% 50%;}
+  50% {background-position: 100% 50%;}
+  100% {background-position: 0% 50%;}
+}
 
-    .particle {
-      position: absolute;
-      width: 4px;
-      height: 4px;
-      background: rgba(168, 199, 255, 0.4);
-      border-radius: 50%;
-      animation: floatParticle linear infinite;
-    }
+/* ===== PARTICLES ===== */
+.particles {
+  position: absolute;
+  inset: 0;
+  pointer-events:none;
+  overflow:hidden;
+  z-index:0;
+}
 
-    @keyframes floatParticle {
-      from { transform: translateY(110vh); opacity: 0; }
-      20% { opacity: 1; }
-      to { transform: translateY(-10vh); opacity: 0; }
-    }
+.particle {
+  position:absolute;
+  width:5px;
+  height:5px;
+  background: rgba(161,196,253,0.5);
+  border-radius:50%;
+  animation: floatParticle linear infinite;
+}
 
-    .container {
-      width: 100%;
-      max-width: 480px;
-      padding: 30px 20px;
-      text-align: center;
-    }
+@keyframes floatParticle {
+  0% { transform: translateY(100vh) scale(0.5); opacity: 0;}
+  10% { opacity:1;}
+  100% { transform: translateY(-10vh) scale(1); opacity:0;}
+}
 
-    h1 {
-      font-size: 1.8rem;
-      margin-bottom: 20px;
-      color: #cfe0ff;
-      text-shadow:
-        0 0 10px rgba(168,199,255,0.5),
-        0 0 25px rgba(168,199,255,0.35);
-      transition: all 0.4s ease;
-    }
+/* ===== TITLE ===== */
+h1 {
+  font-weight:500;
+  font-size:1.8rem;
+  margin-bottom:20px;
+  letter-spacing:0.6px;
+  line-height:1.25;
+  color:#eaf2ff;
+  text-shadow:
+    0 0 6px rgba(161,196,253,0.6),
+    0 0 14px rgba(161,196,253,0.4),
+    0 0 30px rgba(161,196,253,0.15);
+}
 
-    /* ===== HALO VISUALIZER ===== */
-    .album-visualizer {
-      position: relative;
-      width: 100%;
-      max-width: 360px;
-      margin: 0 auto 25px;
-    }
+/* ===== HALO VISUALIZER ===== */
+.album-visualizer {
+  position: relative;
+  width: 100%;
+  max-width: 360px;
+  margin: 0 auto 25px;
+}
 
-    .halo {
-      position: absolute;
-      inset: -12px;
-      border-radius: 50%;
-      background: radial-gradient(circle,
-        rgba(168,199,255,0.45),
-        rgba(168,199,255,0.15),
-        transparent 65%);
-      filter: blur(10px);
-      opacity: 0.8;
-      transform: scale(1);
-      transition: background 0.4s ease;
-      z-index: 0;
-    }
+.halo {
+  position: absolute;
+  inset: -14px;
+  border-radius: 50%;
+  background: radial-gradient(circle,
+    rgba(161,196,253,0.45),
+    rgba(161,196,253,0.18),
+    transparent 65%);
+  filter: blur(14px);
+  opacity: 0.7;
+  transform: scale(1);
+  transition: background 0.4s ease;
+  z-index: 0;
+}
 
-    body.street .halo {
-      background: radial-gradient(circle,
-        rgba(180,180,180,0.35),
-        rgba(120,120,120,0.15),
-        transparent 65%);
-    }
+body.street .halo {
+  background: radial-gradient(circle,
+    rgba(180,180,180,0.35),
+    rgba(120,120,120,0.15),
+    transparent 65%);
+}
 
-    .album-cover {
-      position: relative;
-      width: 100%;
-      border-radius: var(--radius);
-      box-shadow: 0 6px 20px rgba(0,0,0,0.45);
-      z-index: 1;
-    }
+.album-cover {
+  position: relative;
+  width:100%;
+  border-radius: var(--radius);
+  box-shadow:0 6px 20px rgba(0,0,0,0.4);
+  transition: transform 0.25s ease;
+  z-index: 1;
+}
 
-    .track {
-      background: var(--panel);
-      border-radius: var(--radius);
-      padding: 20px;
-      margin-bottom: 20px;
-      backdrop-filter: blur(10px);
-    }
+.album-cover:hover { transform: scale(1.02); }
 
-    .track-title {
-      font-size: 1rem;
-      color: var(--muted);
-      margin-bottom: 12px;
-    }
+/* ===== TRACKS ===== */
+.track {
+  background: var(--panel);
+  border-radius: var(--radius);
+  padding:20px;
+  margin-bottom:20px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.3);
+  backdrop-filter: blur(10px);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
 
-    audio {
-      width: 100%;
-      filter: invert(90%) sepia(5%) saturate(15%) hue-rotate(190deg);
-    }
+.track[data-vibe="street"] {
+  border-left:2px solid rgba(120,160,255,0.35);
+}
 
-    .experimental-link {
-      margin: 20px 0;
-      font-size: 0.75rem;
-      opacity: 0.7;
-      cursor: pointer;
-      text-decoration: underline;
-    }
+.track:hover {
+  transform:translateY(-2px);
+  box-shadow:0 10px 28px rgba(0,0,0,0.5);
+}
 
-    footer {
-      margin-top: 30px;
-      font-size: 0.75rem;
-      opacity: 0.6;
-    }
-  </style>
+.track-title {
+  font-size:1rem;
+  color:var(--muted);
+  margin-bottom:12px;
+}
+
+audio {
+  width:100%;
+  outline:none;
+  border-radius:10px;
+  filter: invert(90%) sepia(5%) saturate(15%) hue-rotate(190deg);
+}
+
+/* ===== STREET MODE ===== */
+body.street::before {
+  background:
+    linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+    url("graffiti-bg.jpg");
+  background-size: cover;
+  background-position:center;
+  animation:none;
+}
+
+body.street h1 {
+  color:#dbe7ff;
+  text-shadow:
+    0 0 4px rgba(120,160,255,0.4),
+    0 0 10px rgba(120,160,255,0.2);
+}
+
+body.street .particle {
+  background: rgba(200,200,200,0.2);
+}
+
+/* ===== LINKS / FOOTER ===== */
+#experimental-link, #back-link {
+  font-size:0.85rem;
+  color:var(--muted);
+  margin-bottom:15px;
+  cursor:pointer;
+  text-decoration:underline;
+}
+
+#experimental-link:hover, #back-link:hover {
+  color: var(--accent);
+}
+
+#go-girl-track, #back-link { display: none; }
+
+footer {
+  margin-top:30px;
+  font-size:0.75rem;
+  color:var(--muted);
+  opacity:0.7;
+}
+
+/* ===== COUNTER ===== */
+.ghost-counter {
+  position:fixed;
+  bottom:10px;
+  right:12px;
+  opacity:0.35;
+  transform:scale(0.55);
+  transform-origin:bottom right;
+  pointer-events:none;
+  z-index:2;
+}
+
+.ghost-counter img {
+  filter: grayscale(60%) brightness(1)
+    drop-shadow(0 0 6px rgba(161,196,253,0.35))
+    drop-shadow(0 0 14px rgba(161,196,253,0.15));
+}
+</style>
 </head>
 
-<body class="ethereal">
+<body>
 
-  <div class="particles"></div>
+<div class="particles"></div>
 
-  <div class="container">
-    <h1 id="title">SAINT3V - October 23rd (Unreleased Demo)</h1>
+<div class="scroll-wrapper">
+<div class="container">
 
-    <div class="album-visualizer">
-      <div class="halo" id="halo"></div>
-      <img src="oct23coverart.jpeg" class="album-cover">
-    </div>
+<h1 id="site-title">SAINT3V</h1>
 
-    <div class="track ethereal-track">
-      <div class="track-title">October 23rd</div>
-      <audio id="audioMain" controls>
-        <source src="October_23rdmp3.mp3" type="audio/mpeg">
-      </audio>
-    </div>
+<!-- VISUALIZER WRAPPER -->
+<div class="album-visualizer">
+  <div class="halo" id="halo"></div>
+  <img id="album-cover"
+       src="oct23coverart.jpeg"
+       alt="October 23rd Album Cover"
+       class="album-cover">
+</div>
 
-    <div class="track street-track" style="display:none;">
-      <div class="track-title">Go Girl</div>
-      <audio id="audioStreet" controls>
-        <source src="gogirl.mp3" type="audio/mpeg">
-      </audio>
-    </div>
+<div class="track" id="oct23-track" data-vibe="ethereal">
+  <div class="track-title">October 23rd (Unreleased Demo)</div>
+  <audio controls preload="none">
+    <source src="October_23rdmp3.mp3" type="audio/mpeg">
+  </audio>
+</div>
 
-    <div class="experimental-link" id="toggleMode">
-      experimental tracks
-    </div>
+<div class="track" id="go-girl-track" data-vibe="street">
+  <div class="track-title">Go Girl (Unreleased Freestyle Demo)</div>
+  <audio controls preload="none">
+    <source src="go_girl_freestylemp3.mp3" type="audio/mpeg">
+  </audio>
+</div>
 
-    <footer>
-      © 2025 SAINT3V<br>
-      Making music while I still can.
-    </footer>
-  </div>
+<div id="experimental-link">Experimental Tracks</div>
+<div id="back-link">Back to Main Tracks</div>
 
-  <script>
-    // particles
-    const p = document.querySelector('.particles');
-    for (let i = 0; i < 40; i++) {
-      const d = document.createElement('div');
-      d.className = 'particle';
-      d.style.left = Math.random() * 100 + '%';
-      d.style.animationDuration = 6 + Math.random() * 10 + 's';
-      p.appendChild(d);
+<footer>
+  © 2025 SAINT3V | Indie Rock Artist / Rapper
+  <div>Making music while i'm still here.</div>
+</footer>
+
+</div>
+</div>
+
+<div class="ghost-counter">
+  <img src="https://hitscounter.dev/api/hit?url=https%3A%2F%2Fsdvantage.com%2F&label=Visitors&icon=person-raised-hand&color=%233d8bfd&style=plastic&tz=US%2FPacific">
+</div>
+
+<script>
+/* ===== PARTICLES ===== */
+const particleContainer = document.querySelector('.particles');
+for (let i=0;i<50;i++){
+  const p = document.createElement('div');
+  p.className = 'particle';
+  const size = Math.random()*4+2;
+  p.style.width = p.style.height = size+'px';
+  p.style.left = Math.random()*100+'%';
+  p.style.animationDuration = 5+Math.random()*10+'s';
+  p.style.animationDelay = Math.random()*10+'s';
+  particleContainer.appendChild(p);
+}
+
+/* ===== EXISTING LOGIC ===== */
+const tracks = document.querySelectorAll('.track audio');
+const siteTitle = document.getElementById('site-title');
+const defaultTitle = siteTitle.textContent;
+const oct23Track = document.getElementById('oct23-track');
+const goGirlTrack = document.getElementById('go-girl-track');
+const experimentalLink = document.getElementById('experimental-link');
+const backLink = document.getElementById('back-link');
+
+/* ===== HALO VISUALIZER LOGIC ===== */
+const halo = document.getElementById('halo');
+let audioCtx, analyser, source, dataArray, raf;
+
+function connectVisualizer(audio){
+  if(audioCtx) audioCtx.close();
+
+  audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  analyser = audioCtx.createAnalyser();
+  analyser.fftSize = 256;
+  dataArray = new Uint8Array(analyser.frequencyBinCount);
+
+  source = audioCtx.createMediaElementSource(audio);
+  source.connect(analyser);
+  analyser.connect(audioCtx.destination);
+
+  animateHalo();
+}
+
+function animateHalo(){
+  raf = requestAnimationFrame(animateHalo);
+  analyser.getByteFrequencyData(dataArray);
+
+  const bass = dataArray.slice(0,10).reduce((a,b)=>a+b,0)/10;
+  const scale = 1 + bass / 520;
+
+  halo.style.transform = `scale(${scale})`;
+  halo.style.opacity = 0.55 + bass / 650;
+}
+
+/* ===== AUDIO EVENTS ===== */
+tracks.forEach(audio=>{
+  audio.addEventListener('play',()=>{
+    tracks.forEach(a=>{ if(a!==audio) a.pause(); });
+
+    connectVisualizer(audio);
+
+    const vibe = audio.closest('.track').dataset.vibe || 'ethereal';
+    document.body.classList.remove('ethereal','street');
+    document.body.classList.add(vibe);
+
+    const trackTitle =
+      audio.closest('.track').querySelector('.track-title').textContent;
+    siteTitle.textContent = `SAINT3V — ${trackTitle}`;
+  });
+
+  audio.addEventListener('pause',()=>{
+    if([...tracks].every(a=>a.paused)){
+      cancelAnimationFrame(raf);
+      halo.style.transform = 'scale(1)';
+      halo.style.opacity = '0.6';
+      siteTitle.textContent = defaultTitle;
     }
+  });
+});
 
-    // mode toggle
-    const toggle = document.getElementById('toggleMode');
-    const etherealTrack = document.querySelector('.ethereal-track');
-    const streetTrack = document.querySelector('.street-track');
+/* ===== MODE TOGGLE ===== */
+experimentalLink.addEventListener('click',()=>{
+  document.body.classList.add('street');
+  siteTitle.textContent='SAINT3V — Experimental Tracks';
+  oct23Track.style.display='none';
+  goGirlTrack.style.display='block';
+  experimentalLink.style.display='none';
+  backLink.style.display='block';
+});
 
-    toggle.onclick = () => {
-      document.body.classList.toggle('street');
-      etherealTrack.style.display =
-        document.body.classList.contains('street') ? 'none' : 'block';
-      streetTrack.style.display =
-        document.body.classList.contains('street') ? 'block' : 'none';
-
-      toggle.textContent =
-        document.body.classList.contains('street')
-        ? 'back to ethereal'
-        : 'experimental tracks';
-    };
-
-    // ===== AUDIO VISUALIZER =====
-    const halo = document.getElementById('halo');
-    let audioCtx, analyser, source, dataArray, raf;
-
-    function connectAudio(audio) {
-      if (audioCtx) audioCtx.close();
-
-      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-      analyser = audioCtx.createAnalyser();
-      analyser.fftSize = 256;
-      dataArray = new Uint8Array(analyser.frequencyBinCount);
-
-      source = audioCtx.createMediaElementSource(audio);
-      source.connect(analyser);
-      analyser.connect(audioCtx.destination);
-
-      animateHalo();
-    }
-
-    function animateHalo() {
-      raf = requestAnimationFrame(animateHalo);
-      analyser.getByteFrequencyData(dataArray);
-
-      let bass = dataArray.slice(0, 10).reduce((a,b)=>a+b) / 10;
-      let scale = 1 + bass / 500;
-
-      halo.style.transform = `scale(${scale})`;
-      halo.style.opacity = 0.6 + bass / 600;
-    }
-
-    document.querySelectorAll('audio').forEach(audio => {
-      audio.addEventListener('play', () => connectAudio(audio));
-      audio.addEventListener('pause', () => cancelAnimationFrame(raf));
-    });
-  </script>
+backLink.addEventListener('click',()=>{
+  document.body.classList.remove('street');
+  siteTitle.textContent=defaultTitle;
+  oct23Track.style.display='block';
+  goGirlTrack.style.display='none';
+  backLink.style.display='none';
+  experimentalLink.style.display='block';
+});
+</script>
 
 </body>
 </html>
