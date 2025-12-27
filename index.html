@@ -29,17 +29,27 @@ body {
   min-height: 100vh;
   position: relative;
   background: #1e1e2e;
-  overflow: hidden;
-}
 
+  /* Allow vertical scrolling on mobile */
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  /* Smooth scrolling on iOS */
+  -webkit-overflow-scrolling: touch;
+}
 /* Scroll wrapper for main content */
 .scroll-wrapper {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  min-height: 100vh;
-  overflow-y: auto;
-  overflow-x: hidden;
+   display: flex;
+   justify-content: center;
+   width: 100%;
+   min-height: 100vh;
+   
+   /* Enable scrolling inside wrapper */
+   overflow-y: auto;
+   overflow-x: hidden;
+
+   /* smooth scrolling on ios*/
+   -webkit-overflow-scrolling: touch;
 }
 
 /* Main container */
