@@ -66,7 +66,6 @@
       100% {background-position: 0% 50%;}
     }
 
-    /* Particle container */
     .particles {
       position: absolute;
       top: 0; left: 0;
@@ -180,7 +179,6 @@
         drop-shadow(0 0 14px rgba(161, 196, 253, 0.15));
     }
 
-    /* STREET / RAP MODE */
     body.street::before {
       background:
         linear-gradient(
@@ -204,7 +202,6 @@
       background: rgba(200, 200, 200, 0.2);
     }
 
-    /* Experimental link */
     #experimental-link {
       font-size: 0.85rem;
       color: var(--muted);
@@ -215,15 +212,18 @@
     #experimental-link:hover {
       color: var(--accent);
     }
-    
+
+    /* Hide experimental tracks by default */
+    #go-girl-track {
+      display: none;
+    }
+
   </style>
 </head>
 <body>
 
-  <!-- Particles -->
   <div class="particles"></div>
 
-  <!-- Scrollable wrapper -->
   <div class="scroll-wrapper">
     <div class="container">
       <h1 id="site-title">SAINT3V</h1>
@@ -238,7 +238,8 @@
         </audio>
       </div>
 
-      <div class="track" data-vibe="street">
+      <!-- Experimental track (hidden by default) -->
+      <div class="track" id="go-girl-track" data-vibe="street">
         <div class="track-title">Go Girl (Unreleased Freestyle Demo)</div>
         <audio controls preload="none">
           <source src="go_girl_freestylemp3.mp3" type="audio/mpeg">
@@ -256,7 +257,6 @@
     </div>
   </div>
 
-  <!-- Ghost visitor counter -->
   <div class="ghost-counter">
     <img
       src="https://hitscounter.dev/api/hit?url=https%3A%2F%2Fsdvantage.com%2F&label=Visitors&icon=person-raised-hand&color=%233d8bfd&message=&style=plastic&tz=US%2FPacific"
@@ -265,7 +265,6 @@
   </div>
 
   <script>
-    // Generate floating particles
     const particleContainer = document.querySelector('.particles');
     const particleCount = 50;
     for (let i = 0; i < particleCount; i++) {
@@ -283,6 +282,7 @@
     const tracks = document.querySelectorAll('.track audio');
     const siteTitle = document.getElementById('site-title');
     const defaultTitle = siteTitle.textContent;
+    const goGirlTrack = document.getElementById('go-girl-track');
 
     // Track play/pause logic
     tracks.forEach(audio => {
@@ -309,10 +309,9 @@
       document.body.classList.remove('ethereal','street');
       document.body.classList.add('street');
       siteTitle.textContent = 'SAINT3V — Experimental Tracks';
+      goGirlTrack.style.display = 'block'; // show the experimental track
     });
-
   </script>
 
 </body>
 </html>
-
