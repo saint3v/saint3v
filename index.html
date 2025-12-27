@@ -47,7 +47,7 @@
       position: relative;
       z-index: 1;
     }
-    
+
     /* Gradient overlay workaround for Safari/iPhone */
     body::before {
       content: '';
@@ -97,9 +97,7 @@
       margin-bottom: 20px;
       letter-spacing: 0.6px;
       line-height: 1.25;
-
-      color: #eaf2ff; /* icy white-blue */
-
+      color: #eaf2ff;
       text-shadow:
         0 0 6px rgba(161, 196, 253, 0.6),
         0 0 14px rgba(161, 196, 253, 0.4),
@@ -195,7 +193,6 @@
       animation: none;
     }
 
-    /* Change glow tone slightly in street mode */
     body.street h1 {
       color: #dbe7ff;
       text-shadow:
@@ -203,9 +200,20 @@
         0 0 10px rgba(120, 160, 255, 0.2);
     }
 
-    /* Particles become subtle dust */
     body.street .particle {
       background: rgba(200, 200, 200, 0.2);
+    }
+
+    /* Experimental link */
+    #experimental-link {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 15px;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+    #experimental-link:hover {
+      color: var(--accent);
     }
     
   </style>
@@ -220,10 +228,10 @@
     <div class="container">
       <h1 id="site-title">SAINT3V</h1>
 
-      <img src="oct23coverart.jpeg" alt="October 23rd Album Cover" class="album-cover">
+      <img id="album-cover" src="oct23coverart.jpeg" alt="October 23rd Album Cover" class="album-cover">
 
       <div class="track" data-vibe="ethereal">
-        <div class="track-title">October 23rd(Unreleased Demo)</div>
+        <div class="track-title">October 23rd (Unreleased Demo)</div>
         <audio controls preload="none">
           <source src="October_23rdmp3.mp3" type="audio/mpeg">
           Your browser does not support the audio element.
@@ -237,6 +245,9 @@
           Your browser does not support the audio element.
         </audio>
       </div>
+
+      <!-- Experimental link -->
+      <div id="experimental-link">Experimental Tracks</div>
 
       <footer>
         © 2025 SAINT3V | Indie Rock Artist / Rapper
@@ -252,11 +263,11 @@
       alt="Visitor counter"
     >
   </div>
+
   <script>
     // Generate floating particles
     const particleContainer = document.querySelector('.particles');
     const particleCount = 50;
-
     for (let i = 0; i < particleCount; i++) {
       const particle = document.createElement('div');
       particle.classList.add('particle');
@@ -272,36 +283,36 @@
     const tracks = document.querySelectorAll('.track audio');
     const siteTitle = document.getElementById('site-title');
     const defaultTitle = siteTitle.textContent;
+
+    // Track play/pause logic
     tracks.forEach(audio => {
       audio.addEventListener('play', () => {
-        // Stop other tracks
-        tracks.forEach(a => {
-          if (a !== audio) a.pause();
-        });
-
-        // Get vibe
+        tracks.forEach(a => { if (a !== audio) a.pause(); });
         const vibe = audio.closest('.track').dataset.vibe || 'ethereal';
-
-        // Reset body classes
-        document.body.classList.remove('ethereal', 'street');
-
-        // Apply new vibe
+        document.body.classList.remove('ethereal','street');
         document.body.classList.add(vibe);
-
-        // Update title
         const trackTitle = audio.closest('.track').querySelector('.track-title').textContent;
         siteTitle.textContent = `SAINT3V — ${trackTitle}`;
       });
 
       audio.addEventListener('pause', () => {
         if ([...tracks].every(a => a.paused)) {
-          document.body.classList.remove('street', 'ethereal');
+          document.body.classList.remove('street','ethereal');
           siteTitle.textContent = defaultTitle;
         }
       });
     });
-    
+
+    // Experimental link logic
+    const experimentalLink = document.getElementById('experimental-link');
+    experimentalLink.addEventListener('click', () => {
+      document.body.classList.remove('ethereal','street');
+      document.body.classList.add('street');
+      siteTitle.textContent = 'SAINT3V — Experimental Tracks';
+    });
+
   </script>
+
 </body>
 </html>
 
