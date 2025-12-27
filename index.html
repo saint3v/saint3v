@@ -210,7 +210,7 @@
   <div class="particles"></div>
 
   <div class="container">
-    <h1>SAINT3V - October 23rd(Unreleased Demo)</h1>
+    <h1 id="site-title">SAINT3V - October 23rd (Unreleased Demo)</h1>
 
     <img src="oct23coverart.jpeg" alt="October 23rd Album Cover" class="album-cover">
 
@@ -254,7 +254,8 @@
     }
 
     const tracks = document.querySelectorAll('.track audio');
-
+    const siteTitle = document.getElementById('site-title');
+    const defaultTitle = siteTitle.textContent;
     tracks.forEach(audio => {
       audio.addEventListener('play', () => {
         // Stop other tracks
@@ -263,20 +264,23 @@
         });
 
         // Get vibe
-        const vibe = audio.closest('.track').dataset.vibe;
+        const vibe = audio.closest('.track').dataset.vibe || 'ethereal';
 
         // Reset body classes
-        document.body.classList.remove('street');
-        document.body.classList.add('ethereal');
+        document.body.classList.remove('ethereal', 'street');
+
         // Apply new vibe
-        if (vibe) {
-          document.body.classList.add(vibe);
-        }
+        document.body.classList.add(vibe);
+
+        // Update title
+        const trackTitle = audio.closest('.track').querySelector('.track-title').textContent;
+        siteTitle.textContent = `SAINT3V — ${trackTitle}`;
       });
 
       audio.addEventListener('pause', () => {
         if ([...tracks].every(a => a.paused)) {
-          document.body.classList.remove('street');
+          document.body.classList.remove('street', 'ethereal');
+          siteTitle.textContent = defaultTitle;
         }
       });
     });
