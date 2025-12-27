@@ -396,10 +396,8 @@ const audioSources = new Map();
 /* Connects the visualizer to a specific audio element */
 function connectVisualizer(audio) {
 
-  // Stop any previous animation
   cancelAnimationFrame(raf);
 
-  // Create audio context and analyser if not yet created
   if (!audioCtx) {
     audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     analyser = audioCtx.createAnalyser();
@@ -407,25 +405,15 @@ function connectVisualizer(audio) {
     dataArray = new Uint8Array(analyser.frequencyBinCount);
   }
 
-  // Check if we already created a source for this audio
-  if (audioSources.has(audio)) {
-    source = audioSources.get(audio);
-  } else {
-    source = audioCtx.createMediaElementSource(audio);
+  // Create & connect source ONLY ONCE per audio
+  if (!audioSources.has(audio)) {
+    const source = audioCtx.createMediaElementSource(audio);
     audioSources.set(audio, source);
+
+    source.connect(analyser);
+    analyser.connect(audioCtx.destination);
   }
 
-  // Disconnect previous connections safely
-  try {
-    source.disconnect();
-    analyser.disconnect();
-  } catch (e) {}
-
-  // Connect audio to analyser and destination
-  source.connect(analyser);
-  analyser.connect(audioCtx.destination);
-
-  // Resume context if it is suspended
   if (audioCtx.state === 'suspended') {
     audioCtx.resume();
   }
@@ -543,6 +531,32 @@ backLink.addEventListener('click', function() {
   backLink.style.display = 'none';
   experimentalLink.style.display = 'block';
 });
+
+/* ==========================
+   PAGE VISIBILITY HANDLING
+   Prevent audio bugs on tab switch
+========================== */
+document.addEventListener('visibilitychange', function () {
+
+  if (document.hidden) {
+
+    // Pause all audio when leaving the page
+    tracks.forEach(function (audio) {
+      audio.pause();
+      audio.currentTime = audio.currentTime; // freeze state
+    });
+
+    // Stop visualizer animation
+    cancelAnimationFrame(raf);
+
+    // Suspend audio context safely
+    if (audioCtx && audioCtx.state === 'running') {
+      audioCtx.suspend();
+    }
+  }
+});
+
+   
 </script>
 
 </body>
