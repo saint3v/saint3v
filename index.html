@@ -53,26 +53,27 @@ body {
 }
 
 /* ==========================
-   BACKGROUND GRADIENT (MORE VISIBLE)
+   BACKGROUND GRADIENT (slit-ray version)
 ========================== */
 body::before {
   content: '';
   position: absolute;
   inset: 0;
   background: linear-gradient(135deg,
-    #1e1e2e,   /* dark blue-gray */
-    #4a4a6e,   /* mid purple-blue */
-    #7a7aa0,   /* lighter periwinkle */
-    #1e1e2e
+    #1e1e2e 0%,        /* dark base */
+    #1e1e2e 48%,       /* keep most dark */
+    #7a7aa0 50%,       /* narrow bright ray */
+    #1e1e2e 52%,       /* back to dark quickly */
+    #1e1e2e 100%
   );
-  background-size: 600% 600%; /* larger for more movement */
+  background-size: 400% 400%; /* keeps ray narrow */
   z-index: 0;
   animation: gradientShift 12s linear infinite;
 }
 
 @keyframes gradientShift {
   0%   { background-position: 0% 0%; }
-  50%  { background-position: 100% 100%; } /* diagonal movement */
+  50%  { background-position: 100% 100%; }
   100% { background-position: 0% 0%; }
 }
 
