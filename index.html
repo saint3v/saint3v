@@ -345,55 +345,39 @@ footer {
 
 <script>
 /* ==========================
-   PARTICLE GENERATION
-   Creates floating particles on the page
+   PARTICLES (Visual Only)
 ========================== */
 const particleContainer = document.querySelector('.particles');
 
 for (let i = 0; i < 50; i++) {
-  const particle = document.createElement('div');
-  particle.className = 'particle';
+  const p = document.createElement('div');
+  p.className = 'particle';
 
-  // Random size between 2px and 6px
   const size = Math.random() * 4 + 2;
-  particle.style.width = size + 'px';
-  particle.style.height = size + 'px';
+  p.style.width = size + 'px';
+  p.style.height = size + 'px';
+  p.style.left = Math.random() * 100 + '%';
+  p.style.animationDuration = 5 + Math.random() * 10 + 's';
+  p.style.animationDelay = Math.random() * 10 + 's';
 
-  // Random horizontal position
-  particle.style.left = Math.random() * 100 + '%';
-
-  // Random animation speed and delay
-  particle.style.animationDuration = 5 + Math.random() * 10 + 's';
-  particle.style.animationDelay = Math.random() * 10 + 's';
-
-  particleContainer.appendChild(particle);
+  particleContainer.appendChild(p);
 }
 
 /* ==========================
-   SELECT ELEMENTS
+   AUDIO + VISUALIZER SETUP
 ========================== */
 const tracks = document.querySelectorAll('.track audio');
+const halo = document.getElementById('halo');
 const siteTitle = document.getElementById('site-title');
 const defaultTitle = siteTitle.textContent;
 
-const oct23Track = document.getElementById('oct23-track');
-const goGirlTrack = document.getElementById('go-girl-track');
-const experimentalLink = document.getElementById('experimental-link');
-const backLink = document.getElementById('back-link');
-
-const halo = document.getElementById('halo');
-
-/* ==========================
-   HALO VISUALIZER SETUP
-========================== */
 let audioCtx;
 let analyser;
-let source;
 let dataArray;
 let raf;
 const audioSources = new Map();
 
-/* Connects the visualizer to a specific audio element */
+/* Connect visualizer to audio (ONCE PER TRACK) */
 function connectVisualizer(audio) {
 
   cancelAnimationFrame(raf);
@@ -405,11 +389,9 @@ function connectVisualizer(audio) {
     dataArray = new Uint8Array(analyser.frequencyBinCount);
   }
 
-  // Create & connect source ONLY ONCE per audio
   if (!audioSources.has(audio)) {
     const source = audioCtx.createMediaElementSource(audio);
     audioSources.set(audio, source);
-
     source.connect(analyser);
     analyser.connect(audioCtx.destination);
   }
@@ -418,145 +400,74 @@ function connectVisualizer(audio) {
     audioCtx.resume();
   }
 
-  // Start halo animation
   animateHalo();
 }
 
-/* Animate the halo based on audio frequencies */
+/* Halo animation */
 function animateHalo() {
-
-  if (!analyser) return; // safety check
-
   raf = requestAnimationFrame(animateHalo);
 
   analyser.getByteFrequencyData(dataArray);
 
-  // Get average bass (first 10 frequencies)
   let bass = 0;
-  for (let i = 0; i < 10; i++) {
-    bass += dataArray[i];
-  }
-  bass = bass / 10;
+  for (let i = 0; i < 10; i++) bass += dataArray[i];
+  bass /= 10;
 
-  // Calculate scale and opacity
-  let scale = 1 + bass / 520;
-  let opacity = 0.55 + bass / 650;
-
-  halo.style.transform = 'scale(' + scale + ')';
-  halo.style.opacity = opacity;
+  halo.style.transform = `scale(${1 + bass / 520})`;
+  halo.style.opacity = 0.55 + bass / 650;
 }
 
 /* ==========================
    AUDIO EVENTS
-   Handle play and pause for all tracks
 ========================== */
-tracks.forEach(function(audio) {
+tracks.forEach(audio => {
 
-  // When a track starts playing
-  audio.addEventListener('play', function() {
+  audio.addEventListener('play', () => {
 
     // Pause all other tracks
-    tracks.forEach(function(otherAudio) {
-      if (otherAudio !== audio) {
-        otherAudio.pause();
-      }
+    tracks.forEach(a => {
+      if (a !== audio) a.pause();
     });
 
-    // Connect visualizer to this audio
     connectVisualizer(audio);
 
-    // Update page vibe (ethereal/street)
-    const vibe = audio.closest('.track').dataset.vibe || 'ethereal';
-    document.body.classList.remove('ethereal', 'street');
-    document.body.classList.add(vibe);
-
-    // Update site title to current track
-    const trackTitle = audio.closest('.track')
-                            .querySelector('.track-title')
-                            .textContent;
-    siteTitle.textContent = 'SAINT3V - ' + trackTitle;
+    const title = audio.closest('.track')
+                       .querySelector('.track-title')
+                       .textContent;
+    siteTitle.textContent = 'SAINT3V - ' + title;
   });
 
-  // When a track is paused
-  audio.addEventListener('pause', function() {
+  audio.addEventListener('pause', () => {
 
-    // If all tracks are paused, reset visualizer
-    let allPaused = true;
-    tracks.forEach(function(a) {
-      if (!a.paused) {
-        allPaused = false;
-      }
-    });
+    const allPaused = [...tracks].every(a => a.paused);
 
     if (allPaused) {
       cancelAnimationFrame(raf);
       halo.style.transform = 'scale(1)';
       halo.style.opacity = '0.6';
+      siteTitle.textContent = defaultTitle;
 
       if (audioCtx && audioCtx.state === 'running') {
         audioCtx.suspend();
       }
-
-      // Reset site title
-      siteTitle.textContent = defaultTitle;
     }
   });
-
 });
 
 /* ==========================
-   MODE TOGGLE (Experimental / Main)
+   TAB / VISIBILITY HANDLING
 ========================== */
-
-// Show experimental track
-experimentalLink.addEventListener('click', function() {
-  document.body.classList.add('street');
-  siteTitle.textContent = 'SAINT3V — Experimental Tracks';
-
-  oct23Track.style.display = 'none';
-  goGirlTrack.style.display = 'block';
-
-  experimentalLink.style.display = 'none';
-  backLink.style.display = 'block';
-});
-
-// Back to main track
-backLink.addEventListener('click', function() {
-  document.body.classList.remove('street');
-  siteTitle.textContent = defaultTitle;
-
-  oct23Track.style.display = 'block';
-  goGirlTrack.style.display = 'none';
-
-  backLink.style.display = 'none';
-  experimentalLink.style.display = 'block';
-});
-
-/* ==========================
-   PAGE VISIBILITY HANDLING
-   Prevent audio bugs on tab switch
-========================== */
-document.addEventListener('visibilitychange', function () {
-
+document.addEventListener('visibilitychange', () => {
   if (document.hidden) {
 
-    // Pause all audio when leaving the page
-    tracks.forEach(function (audio) {
-      audio.pause();
-      audio.currentTime = audio.currentTime; // freeze state
-    });
-
-    // Stop visualizer animation
+    tracks.forEach(audio => audio.pause());
     cancelAnimationFrame(raf);
 
-    // Suspend audio context safely
     if (audioCtx && audioCtx.state === 'running') {
       audioCtx.suspend();
     }
   }
 });
-
-   
 </script>
 
 </body>
