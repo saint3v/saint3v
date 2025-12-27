@@ -71,21 +71,23 @@ body::before {
   inset: 0;
 
   background: linear-gradient(135deg,
-    /* LEFT SIDE (unchanged) */
-    #0d0d1a 0%,        /* deep night blue start */
+    /* LEFT SIDE (unchanged from original) */
+    #0d0d1a 0%,        /* deep night-blue start */
     #0d0d1a 15%,       /* extended deep blue */
     #1e1e2e 25%,       /* dark tone */
-    #2c2c3e 45%,       /* mid dark gray-blue */
+    #2c2c3e 48%,       /* mid-dark gray/blue */
 
-    /* SLIT */
-    #7a7aa0 50%,       /* bright slit center */
-    #7a7aa0 51%,
+    /* SLIT (same width as original ~2%) */
+    #7a7aa0 50%,       /* slit start */
+    #1e1e2e 52%,       /* slit end */
 
-    /* RIGHT SIDE (restart pattern) */
-    #0d0d1a 56%,       /* deep blue again */
-    #1e1e2e 68%,       /* dark tone again */
-    #2c2c3e 75%,       /* mid dark gray-blue */
-    #0b0b1f 100%       /* deep blue end */
+    /* RIGHT SIDE (restart with deep blue) */
+    #0d0d1a 60%,       /* deep blue reset */
+    #1e1e2e 70%,       /* dark tone */
+    #3a3a4e 82%,       /* mid-dark gray/blue */
+
+    /* EXTENDED DEEP BLUE END (restored) */
+    #0b0b1f 100%       /* long night-sky tail */
   );
 
   background-size: 400% 400%;
