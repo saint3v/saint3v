@@ -6,6 +6,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
+/* ==========================
+   ROOT VARIABLES
+========================== */
 :root {
   --panel: rgba(255, 255, 255, 0.05);
   --text: #f0f0f8;
@@ -15,6 +18,9 @@
   --font-main: 'Arial', sans-serif;
 }
 
+/* ==========================
+   GLOBAL STYLES
+========================== */
 * { box-sizing: border-box; margin:0; padding:0; }
 
 body {
@@ -26,6 +32,7 @@ body {
   overflow: hidden;
 }
 
+/* Scroll wrapper for main content */
 .scroll-wrapper {
   display: flex;
   justify-content: center;
@@ -35,6 +42,7 @@ body {
   overflow-x: hidden;
 }
 
+/* Main container */
 .container {
   width: 100%;
   max-width: 480px;
@@ -44,7 +52,9 @@ body {
   z-index: 1;
 }
 
-/* ===== BACKGROUND ===== */
+/* ==========================
+   BACKGROUND GRADIENT
+========================== */
 body::before {
   content: '';
   position: absolute;
@@ -61,7 +71,9 @@ body::before {
   100% {background-position: 0% 50%;}
 }
 
-/* ===== PARTICLES ===== */
+/* ==========================
+   PARTICLES
+========================== */
 .particles {
   position: absolute;
   inset: 0;
@@ -85,7 +97,9 @@ body::before {
   100% { transform: translateY(-10vh) scale(1); opacity:0;}
 }
 
-/* ===== TITLE ===== */
+/* ==========================
+   TITLE
+========================== */
 h1 {
   font-weight:500;
   font-size:1.8rem;
@@ -99,7 +113,9 @@ h1 {
     0 0 30px rgba(161,196,253,0.15);
 }
 
-/* ===== HALO VISUALIZER ===== */
+/* ==========================
+   HALO VISUALIZER
+========================== */
 .album-visualizer {
   position: relative;
   width: 100%;
@@ -140,7 +156,9 @@ body.street .halo {
 
 .album-cover:hover { transform: scale(1.02); }
 
-/* ===== TRACKS ===== */
+/* ==========================
+   TRACKS
+========================== */
 .track {
   background: var(--panel);
   border-radius: var(--radius);
@@ -173,7 +191,9 @@ audio {
   filter: invert(90%) sepia(5%) saturate(15%) hue-rotate(190deg);
 }
 
-/* ===== STREET MODE ===== */
+/* ==========================
+   STREET MODE
+========================== */
 body.street::before {
   background:
     linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
@@ -194,7 +214,9 @@ body.street .particle {
   background: rgba(200,200,200,0.2);
 }
 
-/* ===== LINKS / FOOTER ===== */
+/* ==========================
+   LINKS / FOOTER
+========================== */
 #experimental-link, #back-link {
   font-size:0.85rem;
   color:var(--muted);
@@ -207,6 +229,7 @@ body.street .particle {
   color: var(--accent);
 }
 
+/* Hide tracks initially */
 #go-girl-track, #back-link { display: none; }
 
 footer {
@@ -216,7 +239,9 @@ footer {
   opacity:0.7;
 }
 
-/* ===== COUNTER ===== */
+/* ==========================
+   COUNTER
+========================== */
 .ghost-counter {
   position:fixed;
   bottom:10px;
@@ -238,83 +263,113 @@ footer {
 
 <body>
 
+<!-- PARTICLES CONTAINER -->
 <div class="particles"></div>
 
 <div class="scroll-wrapper">
-<div class="container">
+  <div class="container">
 
-<h1 id="site-title">SAINT3V - October 23rd (Unreleased Demo)</h1>
+    <!-- PAGE TITLE -->
+    <h1 id="site-title">SAINT3V - October 23rd (Unreleased Demo)</h1>
 
-<!-- VISUALIZER WRAPPER -->
-<div class="album-visualizer">
-  <div class="halo" id="halo"></div>
-  <img id="album-cover"
-       src="oct23coverart.jpeg"
-       alt="October 23rd Album Cover"
-       class="album-cover">
+    <!-- VISUALIZER WRAPPER -->
+    <div class="album-visualizer">
+      <div class="halo" id="halo"></div>
+      <img id="album-cover"
+           src="oct23coverart.jpeg"
+           alt="October 23rd Album Cover"
+           class="album-cover">
+    </div>
+
+    <!-- TRACKS -->
+    <div class="track" id="oct23-track" data-vibe="ethereal">
+      <div class="track-title">October 23rd (Unreleased Demo)</div>
+      <audio controls preload="none">
+        <source src="October_23rdmp3.mp3" type="audio/mpeg">
+      </audio>
+    </div>
+
+    <div class="track" id="go-girl-track" data-vibe="street">
+      <div class="track-title">Go Girl (Unreleased Freestyle Demo)</div>
+      <audio controls preload="none">
+        <source src="go_girl_freestylemp3.mp3" type="audio/mpeg">
+      </audio>
+    </div>
+
+    <!-- LINKS -->
+    <div id="experimental-link">Experimental Tracks</div>
+    <div id="back-link">Back to Main Tracks</div>
+
+    <footer>
+      © 2025 SAINT3V | Indie Rock Artist / Rapper
+      <div>Making music while i'm still here.</div>
+    </footer>
+
+  </div>
 </div>
 
-<div class="track" id="oct23-track" data-vibe="ethereal">
-  <div class="track-title">October 23rd (Unreleased Demo)</div>
-  <audio controls preload="none">
-    <source src="October_23rdmp3.mp3" type="audio/mpeg">
-  </audio>
-</div>
-
-<div class="track" id="go-girl-track" data-vibe="street">
-  <div class="track-title">Go Girl (Unreleased Freestyle Demo)</div>
-  <audio controls preload="none">
-    <source src="go_girl_freestylemp3.mp3" type="audio/mpeg">
-  </audio>
-</div>
-
-<div id="experimental-link">Experimental Tracks</div>
-<div id="back-link">Back to Main Tracks</div>
-
-<footer>
-  © 2025 SAINT3V | Indie Rock Artist / Rapper
-  <div>Making music while i'm still here.</div>
-</footer>
-
-</div>
-</div>
-
+<!-- VISITOR COUNTER -->
 <div class="ghost-counter">
   <img src="https://hitscounter.dev/api/hit?url=https%3A%2F%2Fsdvantage.com%2F&label=Visitors&icon=person-raised-hand&color=%233d8bfd&style=plastic&tz=US%2FPacific">
 </div>
 
 <script>
-/* ===== PARTICLES ===== */
+/* ==========================
+   PARTICLE GENERATION
+   Creates floating particles on the page
+========================== */
 const particleContainer = document.querySelector('.particles');
-for (let i=0;i<50;i++){
-  const p = document.createElement('div');
-  p.className = 'particle';
-  const size = Math.random()*4+2;
-  p.style.width = p.style.height = size+'px';
-  p.style.left = Math.random()*100+'%';
-  p.style.animationDuration = 5+Math.random()*10+'s';
-  p.style.animationDelay = Math.random()*10+'s';
-  particleContainer.appendChild(p);
+
+for (let i = 0; i < 50; i++) {
+  const particle = document.createElement('div');
+  particle.className = 'particle';
+
+  // Random size between 2px and 6px
+  const size = Math.random() * 4 + 2;
+  particle.style.width = size + 'px';
+  particle.style.height = size + 'px';
+
+  // Random horizontal position
+  particle.style.left = Math.random() * 100 + '%';
+
+  // Random animation speed and delay
+  particle.style.animationDuration = 5 + Math.random() * 10 + 's';
+  particle.style.animationDelay = Math.random() * 10 + 's';
+
+  particleContainer.appendChild(particle);
 }
 
-/* ===== EXISTING LOGIC ===== */
+/* ==========================
+   SELECT ELEMENTS
+========================== */
 const tracks = document.querySelectorAll('.track audio');
 const siteTitle = document.getElementById('site-title');
 const defaultTitle = siteTitle.textContent;
+
 const oct23Track = document.getElementById('oct23-track');
 const goGirlTrack = document.getElementById('go-girl-track');
 const experimentalLink = document.getElementById('experimental-link');
 const backLink = document.getElementById('back-link');
 
-/* ===== HALO VISUALIZER LOGIC ===== */
 const halo = document.getElementById('halo');
-let audioCtx, analyser, source, dataArray, raf;
 
+/* ==========================
+   HALO VISUALIZER SETUP
+========================== */
+let audioCtx;
+let analyser;
+let source;
+let dataArray;
+let raf;
 const audioSources = new Map();
-  
+
+/* Connects the visualizer to a specific audio element */
 function connectVisualizer(audio) {
+
+  // Stop any previous animation
   cancelAnimationFrame(raf);
 
+  // Create audio context and analyser if not yet created
   if (!audioCtx) {
     audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     analyser = audioCtx.createAnalyser();
@@ -322,6 +377,7 @@ function connectVisualizer(audio) {
     dataArray = new Uint8Array(analyser.frequencyBinCount);
   }
 
+  // Check if we already created a source for this audio
   if (audioSources.has(audio)) {
     source = audioSources.get(audio);
   } else {
@@ -329,57 +385,92 @@ function connectVisualizer(audio) {
     audioSources.set(audio, source);
   }
 
+  // Disconnect previous connections safely
+  try {
+    source.disconnect();
+    analyser.disconnect();
+  } catch (e) {}
 
-try {
-  source.disconnect();
-  analyser.disconnect();
-} catch (e) {}
+  // Connect audio to analyser and destination
+  source.connect(analyser);
+  analyser.connect(audioCtx.destination);
 
-source.connect(analyser);
-analyser.connect(audioCtx.destination);
-
+  // Resume context if it is suspended
   if (audioCtx.state === 'suspended') {
     audioCtx.resume();
   }
 
+  // Start halo animation
   animateHalo();
 }
-  
+
+/* Animate the halo based on audio frequencies */
 function animateHalo() {
-  // SAFETY: analyser may not exist yet or after pause
-  if (!analyser) return;
+
+  if (!analyser) return; // safety check
 
   raf = requestAnimationFrame(animateHalo);
+
   analyser.getByteFrequencyData(dataArray);
 
-  const bass = dataArray
-    .slice(0, 10)
-    .reduce((a, b) => a + b, 0) / 10;
+  // Get average bass (first 10 frequencies)
+  let bass = 0;
+  for (let i = 0; i < 10; i++) {
+    bass += dataArray[i];
+  }
+  bass = bass / 10;
 
-  const scale = 1 + bass / 520;
+  // Calculate scale and opacity
+  let scale = 1 + bass / 520;
+  let opacity = 0.55 + bass / 650;
 
-  halo.style.transform = `scale(${scale})`;
-  halo.style.opacity = 0.55 + bass / 650;
+  halo.style.transform = 'scale(' + scale + ')';
+  halo.style.opacity = opacity;
 }
 
-/* ===== AUDIO EVENTS ===== */
-tracks.forEach(audio=>{
-  audio.addEventListener('play',()=>{
-    tracks.forEach(a=>{ if(a!==audio) a.pause(); });
+/* ==========================
+   AUDIO EVENTS
+   Handle play and pause for all tracks
+========================== */
+tracks.forEach(function(audio) {
 
+  // When a track starts playing
+  audio.addEventListener('play', function() {
+
+    // Pause all other tracks
+    tracks.forEach(function(otherAudio) {
+      if (otherAudio !== audio) {
+        otherAudio.pause();
+      }
+    });
+
+    // Connect visualizer to this audio
     connectVisualizer(audio);
 
+    // Update page vibe (ethereal/street)
     const vibe = audio.closest('.track').dataset.vibe || 'ethereal';
-    document.body.classList.remove('ethereal','street');
+    document.body.classList.remove('ethereal', 'street');
     document.body.classList.add(vibe);
 
-    const trackTitle =
-      audio.closest('.track').querySelector('.track-title').textContent;
-    siteTitle.textContent = `SAINT3V - ${trackTitle}`;
+    // Update site title to current track
+    const trackTitle = audio.closest('.track')
+                            .querySelector('.track-title')
+                            .textContent;
+    siteTitle.textContent = 'SAINT3V - ' + trackTitle;
   });
 
-  audio.addEventListener('pause',()=>{
-    if([...tracks].every(a=>a.paused)){
+  // When a track is paused
+  audio.addEventListener('pause', function() {
+
+    // If all tracks are paused, reset visualizer
+    let allPaused = true;
+    tracks.forEach(function(a) {
+      if (!a.paused) {
+        allPaused = false;
+      }
+    });
+
+    if (allPaused) {
       cancelAnimationFrame(raf);
       halo.style.transform = 'scale(1)';
       halo.style.opacity = '0.6';
@@ -387,28 +478,40 @@ tracks.forEach(audio=>{
       if (audioCtx && audioCtx.state === 'running') {
         audioCtx.suspend();
       }
+
+      // Reset site title
       siteTitle.textContent = defaultTitle;
     }
   });
+
 });
 
-/* ===== MODE TOGGLE ===== */
-experimentalLink.addEventListener('click',()=>{
+/* ==========================
+   MODE TOGGLE (Experimental / Main)
+========================== */
+
+// Show experimental track
+experimentalLink.addEventListener('click', function() {
   document.body.classList.add('street');
-  siteTitle.textContent='SAINT3V — Experimental Tracks';
-  oct23Track.style.display='none';
-  goGirlTrack.style.display='block';
-  experimentalLink.style.display='none';
-  backLink.style.display='block';
+  siteTitle.textContent = 'SAINT3V — Experimental Tracks';
+
+  oct23Track.style.display = 'none';
+  goGirlTrack.style.display = 'block';
+
+  experimentalLink.style.display = 'none';
+  backLink.style.display = 'block';
 });
 
-backLink.addEventListener('click',()=>{
+// Back to main track
+backLink.addEventListener('click', function() {
   document.body.classList.remove('street');
-  siteTitle.textContent=defaultTitle;
-  oct23Track.style.display='block';
-  goGirlTrack.style.display='none';
-  backLink.style.display='none';
-  experimentalLink.style.display='block';
+  siteTitle.textContent = defaultTitle;
+
+  oct23Track.style.display = 'block';
+  goGirlTrack.style.display = 'none';
+
+  backLink.style.display = 'none';
+  experimentalLink.style.display = 'block';
 });
 </script>
 
