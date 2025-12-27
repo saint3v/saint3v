@@ -123,6 +123,10 @@
       transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
 
+    .track[data-vibe="street"] {
+      border-left: 2px solid rgba(120, 160, 255, 0.35);
+    }
+
     .track:hover {
       transform: translateY(-2px);
       box-shadow: 0 10px 28px rgba(0, 0, 0, 0.5);
@@ -210,10 +214,18 @@
 
     <img src="oct23coverart.jpeg" alt="October 23rd Album Cover" class="album-cover">
 
-    <div class="track">
+    <div class="track" data-vibe="ethereal">
       <div class="track-title">October 23rd(Unreleased Demo)</div>
       <audio controls preload="none">
         <source src="October_23rdmp3.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+      </audio>
+    </div>
+
+    <div class="track" data-vibe="street">
+      <div class="track-title">Go Girl (Freestyle Unreleased Demo)</div>
+      <audio controls preload="none">
+        <source src="go_girl_freestylemp3.mp3" type="audio/mpeg">
         Your browser does not support the audio element.
       </audio>
     </div>
