@@ -310,26 +310,52 @@ const backLink = document.getElementById('back-link');
 const halo = document.getElementById('halo');
 let audioCtx, analyser, source, dataArray, raf;
 
-function connectVisualizer(audio){
-  if(audioCtx) audioCtx.close();
+const audioSources = new Map();
+  
+function connectVisualizer(audio) {
+  cancelAnimationFrame(raf);
 
-  audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-  analyser = audioCtx.createAnalyser();
-  analyser.fftSize = 256;
-  dataArray = new Uint8Array(analyser.frequencyBinCount);
+  if (!audioCtx) {
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    analyser = audioCtx.createAnalyser();
+    analyser.fftSize = 256;
+    dataArray = new Uint8Array(analyser.frequencyBinCount);
+  }
 
-  source = audioCtx.createMediaElementSource(audio);
-  source.connect(analyser);
-  analyser.connect(audioCtx.destination);
+  if (audioSources.has(audio)) {
+    source = audioSources.get(audio);
+  } else {
+    source = audioCtx.createMediaElementSource(audio);
+    audioSources.set(audio, source);
+  }
+
+
+try {
+  source.disconnect();
+  analyser.disconnect();
+} catch (e) {}
+
+source.connect(analyser);
+analyser.connect(audioCtx.destination);
+
+  if (audioCtx.state === 'suspended') {
+    audioCtx.resume();
+  }
 
   animateHalo();
 }
+  
+function animateHalo() {
+  // SAFETY: analyser may not exist yet or after pause
+  if (!analyser) return;
 
-function animateHalo(){
   raf = requestAnimationFrame(animateHalo);
   analyser.getByteFrequencyData(dataArray);
 
-  const bass = dataArray.slice(0,10).reduce((a,b)=>a+b,0)/10;
+  const bass = dataArray
+    .slice(0, 10)
+    .reduce((a, b) => a + b, 0) / 10;
+
   const scale = 1 + bass / 520;
 
   halo.style.transform = `scale(${scale})`;
@@ -357,6 +383,10 @@ tracks.forEach(audio=>{
       cancelAnimationFrame(raf);
       halo.style.transform = 'scale(1)';
       halo.style.opacity = '0.6';
+
+      if (audioCtx && audioCtx.state === 'running') {
+        audioCtx.suspend();
+      }
       siteTitle.textContent = defaultTitle;
     }
   });
