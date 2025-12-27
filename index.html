@@ -266,8 +266,8 @@
         const vibe = audio.closest('.track').dataset.vibe;
 
         // Reset body classes
-        document.body.classList.remove('ethereal', 'street');
-
+        document.body.classList.remove('street');
+        document.body.classList.add('ethereal');
         // Apply new vibe
         if (vibe) {
           document.body.classList.add(vibe);
