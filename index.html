@@ -25,14 +25,29 @@
       font-family: var(--font-main);
       color: var(--text);
       min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      overflow: hidden;
       position: relative;
       background: #1e1e2e;
+      overflow: hidden; /* particles stay fixed */
     }
 
+    .scroll-wrapper {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      min-height: 100vh;
+      overflow-y: auto; /* enable vertical scroll */
+      overflow-x: hidden;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 480px;
+      padding: 30px 20px;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+    
     /* Gradient overlay workaround for Safari/iPhone */
     body::before {
       content: '';
@@ -209,33 +224,44 @@
   <!-- Particles -->
   <div class="particles"></div>
 
-  <div class="container">
-    <h1 id="site-title">SAINT3V</h1>
+  <!-- Scrollable wrapper -->
+  <div class="scroll-wrapper">
+    <div class="container">
+      <h1 id="site-title">SAINT3V</h1>
 
-    <img src="oct23coverart.jpeg" alt="October 23rd Album Cover" class="album-cover">
+      <img src="oct23coverart.jpeg" alt="October 23rd Album Cover" class="album-cover">
 
-    <div class="track" data-vibe="ethereal">
-      <div class="track-title">October 23rd(Unreleased Demo)</div>
-      <audio controls preload="none">
-        <source src="October_23rdmp3.mp3" type="audio/mpeg">
-        Your browser does not support the audio element.
-      </audio>
+      <div class="track" data-vibe="ethereal">
+        <div class="track-title">October 23rd(Unreleased Demo)</div>
+        <audio controls preload="none">
+          <source src="October_23rdmp3.mp3" type="audio/mpeg">
+          Your browser does not support the audio element.
+        </audio>
+      </div>
+
+      <div class="track" data-vibe="street">
+        <div class="track-title">Go Girl (Unreleased Freestyle Demo)</div>
+        <audio controls preload="none">
+          <source src="go_girl_freestylemp3.mp3" type="audio/mpeg">
+          Your browser does not support the audio element.
+        </audio>
+      </div>
+
+      <footer>
+        © 2025 SAINT3V | Indie Rock Artist / Rapper
+        <div>Making music while i'm still here.</div>
+      </footer>
     </div>
-
-    <div class="track" data-vibe="street">
-      <div class="track-title">Go Girl (Unreleased Freestyle Demo)</div>
-      <audio controls preload="none">
-        <source src="go_girl_freestylemp3.mp3" type="audio/mpeg">
-        Your browser does not support the audio element.
-      </audio>
-    </div>
-
-    <footer>
-      © 2025 SAINT3V | Indie Rock Artist / Rapper
-      <div>Making music while i'm still here.</div>
-    </footer>
   </div>
 
+  <!-- Ghost visitor counter -->
+  <div class="ghost-counter">
+    <img
+      src="https://hitscounter.dev/api/hit?url=https%3A%2F%2Fsdvantage.com%2F&label=Visitors&icon=person-raised-hand&color=%233d8bfd&message=&style=plastic&tz=US%2FPacific"
+      alt="Visitor counter"
+    >
+  </div>
+</body>
   <script>
     // Generate floating particles
     const particleContainer = document.querySelector('.particles');
@@ -286,13 +312,6 @@
     });
     
   </script>
-<!-- Ghost visitor counter -->
-<div class="ghost-counter">
-  <img
-    src="https://hitscounter.dev/api/hit?url=https%3A%2F%2Fsdvantage.com%2F&label=Visitors&icon=person-raised-hand&color=%233d8bfd&message=&style=plastic&tz=US%2FPacific"
-    alt="Visitor counter"
-  >
-</div>
 
 </body>
 </html>
