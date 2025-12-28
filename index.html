@@ -201,6 +201,26 @@ audio {
   filter: invert(90%) sepia(5%) saturate(15%) hue-rotate(190deg);
 }
 
+.replay-btn {
+  margin-top: 10px;
+  background: transparent;
+  border: 1px solid rgba(161,196,253,0.35);
+  color: var(--muted);
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.replay-btn:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+  box-shadow: 0 0 8px rgba(161,196,253,0.35);
+}
+
+
+
 /* ==========================
    STREET MODE BACKGROUND
 ========================== */
@@ -241,7 +261,7 @@ body.street .particle { background: rgba(200,200,200,0.2); }
   position: fixed;
   bottom: 10px;
   right: 12px;
-  opacity: 1;             /* fully visible */
+  opacity: .85;             /* 85% visible */
   transform: scale(1);    /* normal size */
   pointer-events: auto;   /* now you can hover/click if needed */
   z-index: 9999;          /* ensures it’s above everything */
@@ -274,6 +294,7 @@ footer { margin-top:30px; font-size:0.75rem; color:var(--muted); opacity:0.7; }
       <audio controls preload="none">
         <source src="October_23rdmp3.mp3" type="audio/mpeg">
       </audio>
+      <button class="replay-btn">↺ Replay</button>
     </div>
 
     <div class="track" id="kitties-track" data-vibe="ethereal-override">
@@ -281,6 +302,7 @@ footer { margin-top:30px; font-size:0.75rem; color:var(--muted); opacity:0.7; }
       <audio controls preload="none">
         <source src="v3i_volounteered_to_rehab_adopted_kitties.mp3" type="audio/mpeg">
       </audio>
+      <button class="replay-btn">↺ Replay</button> 
     </div>
 
     <div class="track" id="go-girl-track" data-vibe="street">
@@ -288,6 +310,7 @@ footer { margin-top:30px; font-size:0.75rem; color:var(--muted); opacity:0.7; }
       <audio controls preload="none">
         <source src="go_girl_freestylemp3.mp3" type="audio/mpeg">
       </audio>
+      <button class="replay-btn">↺ Replay</button> 
     </div>
      
     <div class="track" id="chavo-track" data-vibe="street">
@@ -295,6 +318,7 @@ footer { margin-top:30px; font-size:0.75rem; color:var(--muted); opacity:0.7; }
       <audio controls preload="none">
         <source src="Chavo_del_sietemp3.m4a" type="audio/mpeg">
       </audio>
+      <button class="replay-btn">↺ Replay</button> 
     </div>  
      
 
@@ -453,6 +477,25 @@ tracks.forEach(audio => {
 
    updateVibeOnPause();
   });
+
+const replayButtons = document.querySelectorAll('.replay-btn');
+
+replayButtons.forEach(btn => {
+  btn.addEventListener('click', () => {
+    const track = btn.closest('.track');
+    const audio = track.querySelector('audio');
+
+    // Restart track
+    audio.currentTime = 0;
+    audio.play();
+
+    // Ensure title + vibe update correctly
+    const trackName = track.querySelector('.track-title').textContent;
+    siteTitle.textContent = 'SAINT3V - ' + trackName;
+    updateVibeOnPlay(audio);
+  });
+
+   
    
 });
 
