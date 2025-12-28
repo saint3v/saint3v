@@ -141,6 +141,41 @@ h1 {
   50% { transform: translateY(-6px); }
 }
 
+
+/* ==========================
+   SHOOTING STARS
+========================== */
+.shooting-stars {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.shooting-star {
+  position: absolute;
+  width: 2px;
+  height: 80px;
+  background: linear-gradient(45deg, rgba(255,255,255,1), rgba(255,255,255,0));
+  opacity: 0;
+  transform: rotate(45deg) translateX(0) translateY(0);
+  animation: shoot 2s linear forwards;
+}
+
+@keyframes shoot {
+  0% {
+    opacity: 1;
+    transform: translateX(0) translateY(0) rotate(45deg) scaleX(0.5);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(800px) translateY(600px) rotate(45deg) scaleX(1);
+  }
+}
+
+
+   
 /* ==========================
    TRACKS STYLE
 ========================== */
@@ -280,6 +315,11 @@ footer { margin-top:30px; font-size:0.75rem; color:var(--muted); opacity:0.7; }
   <img src="https://hitscounter.dev/api/hit?url=https%3A%2F%2Fsdvantage.com%2F&label=Visitors&icon=person-raised-hand&color=%233d8bfd&style=plastic&tz=US%2FPacific">
 </div>
 
+<div class="shooting-stars"></div>
+
+   
+</body>
+   
 <script>
 /* ==========================
    CREATE FLOATING PARTICLES
@@ -305,6 +345,37 @@ for (let i = 0; i < 50; i++) {
   particleContainer.appendChild(particle);
 }
 
+/*===========================================
+Shooting stars
+================================*/
+
+
+const shootingStarsContainer = document.querySelector('.shooting-stars');
+
+function spawnShootingStar() {
+  const star = document.createElement('div');
+  star.className = 'shooting-star';
+
+  // random starting position
+  star.style.top = Math.random() * 80 + '%';
+  star.style.left = Math.random() * 100 + '%';
+
+  // random animation duration
+  const duration = 1.5 + Math.random() * 1.5; // 1.5s to 3s
+  star.style.animationDuration = duration + 's';
+
+  shootingStarsContainer.appendChild(star);
+
+  // remove after animation ends
+  star.addEventListener('animationend', () => star.remove());
+}
+
+// spawn a shooting star every 2-4 seconds randomly
+setInterval(() => {
+  if (Math.random() < 0.6) spawnShootingStar(); // 60% chance
+}, 2000);
+
+   
 /* ==========================
    TRACK PLAY & VIBE SWITCHING
 ========================== */
