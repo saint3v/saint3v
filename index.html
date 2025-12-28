@@ -54,7 +54,7 @@ body {
 }
 
 /* ==========================
-   BACKGROUND GRADIENT
+   BACKGROUND GRADIENT (INFINITE LOOP)
 ========================== */
 body::before {
   pointer-events: none;
@@ -68,13 +68,12 @@ body::before {
   );
   background-size: 400% 400%;
   z-index: 0;
-  animation: gradientShift 34s linear infinite;
+  animation: gradientLoop 34s linear infinite;
 }
 
-@keyframes gradientShift {
+@keyframes gradientLoop {
   0% { background-position: 0% 0%; }
-  50% { background-position: 100% 100%; }
-  100% { background-position: 0% 0%; }
+  100% { background-position: 100% 100%; }
 }
 
 /* ==========================
@@ -311,9 +310,7 @@ tracks.forEach(audio => {
 
   audio.addEventListener('pause', () => {
     const allPaused = [...tracks].every(a => a.paused);
-    if (allPaused) {
-      siteTitle.textContent = defaultTitle;
-    }
+    if (allPaused) siteTitle.textContent = defaultTitle;
   });
 });
 
