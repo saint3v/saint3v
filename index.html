@@ -449,8 +449,8 @@ tracks.forEach(audio => {
 /* ==========================
      MEDIA SESSION (LOCK SCREEN)
   ========================== */
-  if ('mediaSession' in navigator) {
-    navigator.mediaSession.metadata = new MediaMetadata({
+if ('mediaSession' in navigator) {
+   navigator.mediaSession.metadata = new MediaMetadata({
       title: title,
       artist: 'SAINT3V',
       album: 'October 23rd',
@@ -461,15 +461,10 @@ tracks.forEach(audio => {
           type: 'image/jpeg'
         }
       ]
-    });
-
-     
-  });
-
-
-
-   
-
+   });
+   navigator.mediaSession.setActionHandler('play', () => audio.play());
+   navigator.mediaSession.setActionHandler('pause', () => audio.pause());
+}
    
 
    
@@ -513,13 +508,13 @@ VISUALIZER SLEEP AUDIO CONT.
 ================================== */
 document.addEventListener('visibilitychange', () => {
    if (document.hidden) {
-      cancelAnimationFrame(raf):
+      cancelAnimationFrame(raf);
 
       if (audioCtx && audioCtx.state === 'running') {
-         audioCtx.suspent(); //halo sleeps
+         audioCtx.suspend(); //halo sleeps
       }
    } else {
-      if (audioCtx && audioCtx.state === 'suspend') {
+      if (audioCtx && audioCtx.state === 'suspended') {
          audioCtx.resume();
          animateHalo(); // halo wakes
       }
