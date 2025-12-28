@@ -294,7 +294,7 @@ footer { margin-top:30px; font-size:0.75rem; color:var(--muted); opacity:0.7; }
       <audio controls preload="none">
         <source src="October_23rdmp3.mp3" type="audio/mpeg">
       </audio>
-      <button class="replay-btn">↺ Replay</button>
+      <button class="loop-btn">↺ Loop</button>
     </div>
 
     <div class="track" id="kitties-track" data-vibe="ethereal-override">
@@ -302,7 +302,7 @@ footer { margin-top:30px; font-size:0.75rem; color:var(--muted); opacity:0.7; }
       <audio controls preload="none">
         <source src="v3i_volounteered_to_rehab_adopted_kitties.mp3" type="audio/mpeg">
       </audio>
-      <button class="replay-btn">↺ Replay</button> 
+      <button class="loop-btn">↺ Loop</button>
     </div>
 
     <div class="track" id="go-girl-track" data-vibe="street">
@@ -310,7 +310,7 @@ footer { margin-top:30px; font-size:0.75rem; color:var(--muted); opacity:0.7; }
       <audio controls preload="none">
         <source src="go_girl_freestylemp3.mp3" type="audio/mpeg">
       </audio>
-      <button class="replay-btn">↺ Replay</button> 
+      <button class="loop-btn">↺ Loop</button> 
     </div>
      
     <div class="track" id="chavo-track" data-vibe="street">
@@ -318,7 +318,7 @@ footer { margin-top:30px; font-size:0.75rem; color:var(--muted); opacity:0.7; }
       <audio controls preload="none">
         <source src="Chavo_del_sietemp3.m4a" type="audio/mpeg">
       </audio>
-      <button class="replay-btn">↺ Replay</button> 
+      <button class="loop-btn">↺ Loop</button> 
     </div>  
      
 
@@ -483,26 +483,40 @@ tracks.forEach(audio => {
 
 /*============================================
 ===========================================
-            replay
+            loop mode
 ===========================================
 =============================================*/
-const replayButtons = document.querySelectorAll('.replay-btn');
+const loopButtons = document.querySelectorAll('.loop-btn'); // new loop toggle
+const loopFlags = new WeakMap(); // store loop state for each audio
 
-replayButtons.forEach(btn => {
+loopButtons.forEach(btn => {
   btn.addEventListener('click', () => {
     const track = btn.closest('.track');
     const audio = track.querySelector('audio');
 
-    // Restart track
-    audio.currentTime = 0;
-    audio.play();
+    // Toggle loop state
+    const isLooping = loopFlags.get(audio) || false;
+    loopFlags.set(audio, !isLooping);
 
-    // Ensure title + vibe update correctly
-    const trackName = track.querySelector('.track-title').textContent;
-    siteTitle.textContent = 'SAINT3V - ' + trackName;
-    updateVibeOnPlay(audio);
+    // Update button text
+    btn.textContent = !isLooping ? '↺ Loop ON' : '↺ Loop OFF';
   });
 });
+
+// Auto-replay when track ends if loop mode is on
+tracks.forEach(audio => {
+  audio.addEventListener('ended', () => {
+    if (loopFlags.get(audio)) {
+      audio.currentTime = 0;
+      audio.play();
+    }
+  });
+});
+
+
+
+
+   
 /* ==========================
    SWITCH BETWEEN MAIN & EXPERIMENTAL TRACKS
 ========================== */
