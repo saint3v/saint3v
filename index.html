@@ -93,7 +93,7 @@ body::before {
 
    background-size: 400% 400%;
    z-index: 0;
-   animation: gradientShift 32s linear infinite;
+   animation: gradientShift 36s linear infinite;
 }
    
 @keyframes gradientShift {
@@ -425,6 +425,8 @@ function animateHalo() {
   halo.style.opacity = 0.55 + bass / 650;
 }
 
+
+   
 /* ==========================
    AUDIO EVENTS
 ========================== */
@@ -443,8 +445,34 @@ tracks.forEach(audio => {
                        .querySelector('.track-title')
                        .textContent;
     siteTitle.textContent = 'SAINT3V - ' + title;
+
+/* ==========================
+     MEDIA SESSION (LOCK SCREEN)
+  ========================== */
+  if ('mediaSession' in navigator) {
+    navigator.mediaSession.metadata = new MediaMetadata({
+      title: title,
+      artist: 'SAINT3V',
+      album: 'October 23rd',
+      artwork: [
+        {
+          src: 'oct23coverart.jpeg',
+          sizes: '512x512',
+          type: 'image/jpeg'
+        }
+      ]
+    });
+
+     
   });
 
+
+
+   
+
+   
+
+   
   audio.addEventListener('pause', () => {
 
     const allPaused = [...tracks].every(a => a.paused);
@@ -465,6 +493,8 @@ tracks.forEach(audio => {
 /* ==========================
    TAB / VISIBILITY HANDLING
 ========================== */
+
+/*
 document.addEventListener('visibilitychange', () => {
   if (document.hidden) {
 
@@ -476,8 +506,29 @@ document.addEventListener('visibilitychange', () => {
     }
   }
 });
+*/
+ 
+/* =================================
+VISUALIZER SLEEP AUDIO CONT.
+================================== */
+document.addEventListener('visibilitychange', () => {
+   if (document.hidden) {
+      cancelAnimationFrame(raf):
+
+      if (audioCtx && audioCtx.state === 'running') {
+         audioCtx.suspent(); //halo sleeps
+      }
+   } else {
+      if (audioCtx && audioCtx.state === 'suspend') {
+         audioCtx.resume();
+         animateHalo(); // halo wakes
+      }
+   }
+});
 
 
+
+   
 /* ==========================
    EXPERIMENTAL / MAIN TOGGLE
 ========================== */
