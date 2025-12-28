@@ -197,6 +197,18 @@ body.street .particle { background: rgba(200,200,200,0.2); }
 
 #chavo-track, #kitties-track, #go-girl-track, #back-link { display: none; }
 
+
+.ghost-counter {
+  position: fixed;
+  bottom: 10px;
+  right: 12px;
+  opacity: 1;             /* fully visible */
+  transform: scale(1);    /* normal size */
+  pointer-events: auto;   /* now you can hover/click if needed */
+  z-index: 9999;          /* ensures it’s above everything */
+}
+
+   
 footer { margin-top:30px; font-size:0.75rem; color:var(--muted); opacity:0.7; }
 </style>
 </head>
