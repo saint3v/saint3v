@@ -57,18 +57,26 @@ body {
    BACKGROUND GRADIENT (INFINITE LOOP)
 ========================== */
 body::before {
-  pointer-events: none;
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg,
-    #0d0d1a 0%, #0d0d1a 15%, #1e1e2e 25%, #2c2c3e 48%,
-    #7a7aa0 50%, #1e1e2e 52%,
-    #0d0d1a 60%, #1e1e2e 70%, #3a3a4e 82%, #0b0b1f 89%, #0b0b1f 100%
-  );
-  background-size: 400% 400%;
-  z-index: 0;
-  animation: gradientLoop 34s linear infinite;
+   pointer-events: none;
+   content: '';
+   position: absolute;
+   inset: 0;
+   background: linear-gradient(135deg,
+   #0d0d1a 0%, 
+   #0d0d1a 15%, 
+   #1e1e2e 25%, 
+   #2c2c3e 48%,
+   #7a7aa0 50%, 
+   #1e1e2e 52%,
+   #0d0d1a 60%, 
+   #1e1e2e 70%, 
+   #3a3a4e 82%, 
+   #0b0b1f 95%, /* extend almost to 100% */
+   #0b0b1f 105%
+);
+   background-size: 400% 400%;
+   z-index: 0;
+   animation: gradientLoop 34s linear infinite;
 }
 
 @keyframes gradientLoop {
