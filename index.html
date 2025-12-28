@@ -195,7 +195,7 @@ body.street .particle { background: rgba(200,200,200,0.2); }
 
 #experimental-link:hover, #back-link:hover { color: var(--accent); }
 
-#kitties-track, #go-girl-track, #back-link { display: none; }
+#chavo-track, #kitties-track, #go-girl-track, #back-link { display: none; }
 
 footer { margin-top:30px; font-size:0.75rem; color:var(--muted); opacity:0.7; }
 </style>
@@ -238,6 +238,14 @@ footer { margin-top:30px; font-size:0.75rem; color:var(--muted); opacity:0.7; }
         <source src="go_girl_freestylemp3.mp3" type="audio/mpeg">
       </audio>
     </div>
+     
+    <div class="track" id="chavo-track" data-vibe="street">
+      <div class="track-title">Chavo Del Seis</div>
+      <audio controls preload="none">
+        <source src="Chavo_del_sietemp3.m4a" type="audio/mpeg">
+      </audio>
+    </div>  
+     
 
     <!-- LINKS TO SWITCH TRACKS -->
     <div id="experimental-link">Experimental Tracks</div>
@@ -348,6 +356,7 @@ tracks.forEach(audio => {
 const oct23Track = document.getElementById('oct23-track');
 const goGirlTrack = document.getElementById('go-girl-track');
 const kittiesTrack = document.getElementById('kitties-track');
+const chavoTrack = document.getElementById('chavo-track');
 const experimentalLink = document.getElementById('experimental-link');
 const backLink = document.getElementById('back-link');
 
@@ -357,6 +366,8 @@ experimentalLink.addEventListener('click', () => {
   oct23Track.style.display = 'none';
   kittiesTrack.style.display = 'block';
   goGirlTrack.style.display = 'block';
+  chavoTrack.style.display = 'block'; 
+   
   experimentalLink.style.display = 'none';
   backLink.style.display = 'block';
 });
