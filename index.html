@@ -346,9 +346,8 @@ for (let i = 0; i < 50; i++) {
 }
 
 /*===========================================
-Shooting stars
-================================*/
-
+   Shooting Stars - Rare & Consistent Angle
+===========================================*/
 
 const shootingStarsContainer = document.querySelector('.shooting-stars');
 
@@ -356,24 +355,36 @@ function spawnShootingStar() {
   const star = document.createElement('div');
   star.className = 'shooting-star';
 
-  // random starting position
-  star.style.top = Math.random() * 80 + '%';
-  star.style.left = Math.random() * 100 + '%';
+  // Random starting position (top 80% of viewport)
+  star.style.left = Math.random() * window.innerWidth + 'px';
+  star.style.top = Math.random() * window.innerHeight * 0.8 + 'px';
 
-  // random animation duration
-  const duration = 1.5 + Math.random() * 1.5; // 1.5s to 3s
-  star.style.animationDuration = duration + 's';
+  // Random length and width
+  star.style.height = 60 + Math.random() * 40 + 'px'; // 60–100px
+  star.style.width = 1 + Math.random() * 2 + 'px';    // 1–3px
+
+  // Random duration
+  star.style.animationDuration = 1.8 + Math.random() * 1.7 + 's'; // 1.8s–3.5s
+
+  // Fixed angle: top-left → bottom-right
+  const fixedAngle = 49;
+  star.style.background = `linear-gradient(-${fixedAngle}deg, rgba(255,255,255,1), rgba(255,255,255,0))`;
+  star.style.transform = `rotate(${fixedAngle}deg)`;
 
   shootingStarsContainer.appendChild(star);
 
-  // remove after animation ends
+  // Remove after animation
   star.addEventListener('animationend', () => star.remove());
 }
 
-// spawn a shooting star every 2-4 seconds randomly
-setInterval(() => {
-  if (Math.random() < 0.6) spawnShootingStar(); // 60% chance
-}, 8000);
+// Rare spawns: only a chance every 5–15 seconds
+function startRareShootingStars() {
+  setInterval(() => {
+    if (Math.random() < 0.25) spawnShootingStar(); // 25% chance
+  }, 5000 + Math.random() * 10000); // 5–15s interval
+}
+
+startRareShootingStars();
 
    
 /* ==========================
