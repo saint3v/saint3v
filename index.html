@@ -157,7 +157,7 @@ h1 {
   position: absolute;
   width: 2px;
   height: 80px;
-  background: linear-gradient(45deg, rgba(255,255,255,1), rgba(255,255,255,0));
+  background: linear-gradient(-45deg, rgba(255,255,255,1), rgba(255,255,255,0));
   opacity: 0;
   transform: rotate(45deg) translateX(0) translateY(0);
   animation: shoot 2s linear forwards;
@@ -166,11 +166,11 @@ h1 {
 @keyframes shoot {
   0% {
     opacity: .95;
-    transform: translateX(0) translateY(0) rotate(45deg) scaleX(0.5);
+    transform: translateX(0) translateY(0) rotate(-45deg) scaleX(0.5);
   }
   100% {
     opacity: 0;
-    transform: translateX(800px) translateY(600px) rotate(45deg) scaleX(1);
+    transform: translateX(800px) translateY(600px) rotate(-45deg) scaleX(1);
   }
 }
 
