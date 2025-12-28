@@ -431,56 +431,31 @@ function animateHalo() {
    AUDIO EVENTS
 ========================== */
 tracks.forEach(audio => {
-
   audio.addEventListener('play', () => {
-
-    // Pause all other tracks
-    tracks.forEach(a => {
-      if (a !== audio) a.pause();
-    });
-
+    tracks.forEach(a => { if (a !== audio) a.pause(); });
     connectVisualizer(audio);
-
-    const title = audio.closest('.track')
-                       .querySelector('.track-title')
-                       .textContent;
+    const title = audio.closest('.track').querySelector('.track-title').textContent;
     siteTitle.textContent = 'SAINT3V - ' + title;
 
-/* ==========================
-     MEDIA SESSION (LOCK SCREEN)
-  ========================== */
-if ('mediaSession' in navigator) {
-   navigator.mediaSession.metadata = new MediaMetadata({
-      title: title,
-      artist: 'SAINT3V',
-      album: 'October 23rd',
-      artwork: [
-        {
-          src: 'oct23coverart.jpeg',
-          sizes: '512x512',
-          type: 'image/jpeg'
-        }
-      ]
-   });
-   navigator.mediaSession.setActionHandler('play', () => audio.play());
-   navigator.mediaSession.setActionHandler('pause', () => audio.pause());
-}
-   
+    if ('mediaSession' in navigator) {
+      navigator.mediaSession.metadata = new MediaMetadata({
+        title, artist: 'SAINT3V', album: 'October 23rd',
+        artwork: [{ src: 'oct23coverart.jpeg', sizes:'512x512', type:'image/jpeg'}]
+      });
+      navigator.mediaSession.setActionHandler('play', () => audio.play());
+      navigator.mediaSession.setActionHandler('pause', () => audio.pause());
+    }
+  });
 
-   
+  // PAUSE listener here, outside play listener
   audio.addEventListener('pause', () => {
-
     const allPaused = [...tracks].every(a => a.paused);
-
     if (allPaused) {
       cancelAnimationFrame(raf);
       halo.style.transform = 'scale(1)';
       halo.style.opacity = '0.6';
       siteTitle.textContent = defaultTitle;
-
-      if (audioCtx && audioCtx.state === 'running') {
-        audioCtx.suspend();
-      }
+      if (audioCtx && audioCtx.state === 'running') audioCtx.suspend();
     }
   });
 });
