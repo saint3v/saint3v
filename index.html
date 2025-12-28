@@ -477,7 +477,15 @@ tracks.forEach(audio => {
 
    updateVibeOnPause();
   });
+});
 
+
+
+/*============================================
+===========================================
+            replay
+===========================================
+=============================================*/
 const replayButtons = document.querySelectorAll('.replay-btn');
 
 replayButtons.forEach(btn => {
@@ -494,11 +502,7 @@ replayButtons.forEach(btn => {
     siteTitle.textContent = 'SAINT3V - ' + trackName;
     updateVibeOnPlay(audio);
   });
-
-   
-   
 });
-
 /* ==========================
    SWITCH BETWEEN MAIN & EXPERIMENTAL TRACKS
 ========================== */
