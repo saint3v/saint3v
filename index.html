@@ -201,6 +201,11 @@ body.street .particle { background: rgba(200,200,200,0.2); }
    LINKS / FOOTER
 ========================== */
 #experimental-link, #back-link { font-size:0.85rem; color:var(--muted); margin-bottom:15px; cursor:pointer; text-decoration:underline; }
+#experimental-link {
+   font-size: 0.75rem;
+   opacity: 0.75;
+}
+   
 #experimental-link:hover, #back-link:hover { color: var(--accent); }
 
 #go-girl-track, #back-link { display: none; }
@@ -253,6 +258,16 @@ footer { margin-top:30px; font-size:0.75rem; color:var(--muted); opacity:0.7; }
       </audio>
     </div>
 
+   <div class="track" id="kitties-track" data-vibe="ethereal-override">
+     <div class="track-title">
+       I volunteered to rehab abandoned kitties (i don't miss you (i do))
+     </div>
+     <audio controls preload="none">
+       <source src="mp3v2i_volounteered_to_rehab_adopted_kittiesv2.mp3" type="audio/mpeg">
+     </audio>
+   </div>
+
+     
     <div class="track" id="go-girl-track" data-vibe="street">
       <div class="track-title">Go Girl (Unreleased Freestyle Demo)</div>
       <audio controls preload="none">
@@ -295,23 +310,64 @@ for (let i = 0; i < 50; i++) {
 }
 
 /* ==========================
-   AUDIO EVENTS + MEDIA SESSION
+   AUDIO + MEDIA SESSION
 ========================== */
 const tracks = document.querySelectorAll('.track audio');
 const siteTitle = document.getElementById('site-title');
 const defaultTitle = siteTitle.textContent;
 
+/* ==========================
+   VIBE MANAGER (POLISH)
+========================== */
+function updateVibeOnPlay(audio) {
+  const track = audio.closest('.track');
+  const vibe = track.dataset.vibe;
+
+  if (vibe === 'street') {
+    document.body.classList.add('street');
+  }
+
+  if (vibe === 'ethereal-override') {
+    document.body.classList.remove('street');
+  }
+}
+
+function updateVibeOnPause() {
+  const playing = [...tracks].find(a => !a.paused);
+  if (!playing) return;
+
+  const vibe = playing.closest('.track').dataset.vibe;
+
+  if (vibe === 'street') {
+    document.body.classList.add('street');
+  } else {
+    document.body.classList.remove('street');
+  }
+}
+
+/* ==========================
+   TRACK EVENTS
+========================== */
 tracks.forEach(audio => {
   audio.addEventListener('play', () => {
     tracks.forEach(a => { if (a !== audio) a.pause(); });
-    const title = audio.closest('.track').querySelector('.track-title').textContent;
+
+    const title = audio.closest('.track')
+      .querySelector('.track-title').textContent;
+
     siteTitle.textContent = 'SAINT3V - ' + title;
+    updateVibeOnPlay(audio);
 
     if ('mediaSession' in navigator) {
       navigator.mediaSession.metadata = new MediaMetadata({
-        title, artist: 'SAINT3V', album: 'October 23rd',
-        artwork: [{ src: 'oct23coverart.jpeg', sizes:'512x512', type:'image/jpeg'}]
+        title,
+        artist: 'SAINT3V',
+        album: 'October 23rd',
+        artwork: [
+          { src: 'oct23coverart.jpeg', sizes: '512x512', type: 'image/jpeg' }
+        ]
       });
+
       navigator.mediaSession.setActionHandler('play', () => audio.play());
       navigator.mediaSession.setActionHandler('pause', () => audio.pause());
     }
@@ -320,6 +376,7 @@ tracks.forEach(audio => {
   audio.addEventListener('pause', () => {
     const allPaused = [...tracks].every(a => a.paused);
     if (allPaused) siteTitle.textContent = defaultTitle;
+    updateVibeOnPause();
   });
 });
 
@@ -328,14 +385,19 @@ tracks.forEach(audio => {
 ========================== */
 const oct23Track = document.getElementById('oct23-track');
 const goGirlTrack = document.getElementById('go-girl-track');
+const kittiesTrack = document.getElementById('kitties-track');
+
 const experimentalLink = document.getElementById('experimental-link');
 const backLink = document.getElementById('back-link');
 
 experimentalLink.addEventListener('click', () => {
   document.body.classList.add('street');
   siteTitle.textContent = 'SAINT3V — Experimental Tracks';
+
   oct23Track.style.display = 'none';
+  kittiesTrack.style.display = 'block';
   goGirlTrack.style.display = 'block';
+
   experimentalLink.style.display = 'none';
   backLink.style.display = 'block';
 });
@@ -343,8 +405,11 @@ experimentalLink.addEventListener('click', () => {
 backLink.addEventListener('click', () => {
   document.body.classList.remove('street');
   siteTitle.textContent = defaultTitle;
+
   oct23Track.style.display = 'block';
+  kittiesTrack.style.display = 'none';
   goGirlTrack.style.display = 'none';
+
   backLink.style.display = 'none';
   experimentalLink.style.display = 'block';
 });
