@@ -29,23 +29,23 @@ body {
   min-height: 100vh;
   position: relative;
   background: #1e1e2e;
-
   overflow-x: hidden;
   overflow-y: auto;
-
   -webkit-overflow-scrolling: touch;
 }
 
+/* Scroll wrapper */
 .scroll-wrapper {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  min-height: 100vh;
-  overflow-y: auto;
-  overflow-x: hidden;
-  -webkit-overflow-scrolling: touch;
+   display: flex;
+   justify-content: center;
+   width: 100%;
+   min-height: 100vh;
+   overflow-y: auto;
+   overflow-x: hidden;
+   -webkit-overflow-scrolling: touch;
 }
 
+/* Main container */
 .container {
   width: 100%;
   max-width: 480px;
@@ -55,34 +55,29 @@ body {
   z-index: 1;
 }
 
-/* ==========================
-   BACKGROUND GRADIENT
-========================== */
+/* BACKGROUND GRADIENT */
 body::before {
-  pointer-events: none;
-  content: '';
-  position: absolute;
-  inset: 0;
-
-  background: linear-gradient(135deg,
-    #0d0d1a 0%, #0d0d1a 15%, #1e1e2e 25%, #2c2c3e 48%,
-    #7a7aa0 50%, #1e1e2e 52%,
-    #0d0d1a 60%, #1e1e2e 70%, #3a3a4e 82%, #0b0b1f 89%, #0b0b1f 100%
-  );
-  background-size: 400% 400%;
-  z-index: 0;
-  animation: gradientShift 34s linear infinite;
+   pointer-events: none;
+   content: '';
+   position: absolute;
+   inset: 0;
+   background: linear-gradient(135deg,
+      #0d0d1a 0%, #0d0d1a 15%, #1e1e2e 25%, #2c2c3e 48%,
+      #7a7aa0 50%, #1e1e2e 52%,
+      #0d0d1a 60%, #1e1e2e 70%, #3a3a4e 82%, #0b0b1f 89%, #0b0b1f 100%
+   );
+   background-size: 400% 400%;
+   z-index: 0;
+   animation: gradientShift 34s linear infinite;
 }
 
 @keyframes gradientShift {
-  0% { background-position: 0% 0%; }
-  50% { background-position: 100% 100%; }
-  100% { background-position: 0% 0%; }
+   0%   { background-position: 0% 0%; }
+   50%  { background-position: 100% 100%; }
+   100% { background-position: 0% 0%; }
 }
 
-/* ==========================
-   PARTICLES
-========================== */
+/* PARTICLES */
 .particles {
   position: absolute;
   inset: 0;
@@ -106,9 +101,7 @@ body::before {
   100% { transform: translateY(-10vh) scale(1); opacity:0;}
 }
 
-/* ==========================
-   TITLE
-========================== */
+/* TITLE */
 h1 {
   font-weight:500;
   font-size:1.8rem;
@@ -121,30 +114,17 @@ h1 {
                0 0 30px rgba(161,196,253,0.15);
 }
 
-/* ==========================
-   ALBUM COVER
-========================== */
-.album-visualizer {
-  position: relative;
+/* ALBUM COVER */
+.album-cover {
   width: 100%;
   max-width: 360px;
-  margin: 0 auto 25px;
-}
-
-.album-cover {
-  position: relative;
-  width:100%;
   border-radius: var(--radius);
-  box-shadow:0 6px 20px rgba(0,0,0,0.4);
-  transition: transform 0.25s ease;
-  z-index: 1;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+  margin: 0 auto 25px;
+  display: block;
 }
 
-.album-cover:hover { transform: scale(1.02); }
-
-/* ==========================
-   TRACKS
-========================== */
+/* TRACKS */
 .track {
   background: var(--panel);
   border-radius: var(--radius);
@@ -152,51 +132,57 @@ h1 {
   margin-bottom:20px;
   box-shadow: 0 6px 16px rgba(0,0,0,0.3);
   backdrop-filter: blur(10px);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.track[data-vibe="street"] { border-left:2px solid rgba(120,160,255,0.35); }
+.track[data-vibe="street"] {
+  border-left:2px solid rgba(120,160,255,0.35);
+}
 
-.track:hover { transform:translateY(-2px); box-shadow:0 10px 28px rgba(0,0,0,0.5); }
+.track-title {
+  font-size:1rem;
+  color:var(--muted);
+  margin-bottom:12px;
+}
 
-.track-title { font-size:1rem; color:var(--muted); margin-bottom:12px; }
-
-audio { width:100%; outline:none; border-radius:10px;
+audio {
+  width:100%;
+  outline:none;
+  border-radius:10px;
   filter: invert(90%) sepia(5%) saturate(15%) hue-rotate(190deg);
 }
 
-/* ==========================
-   STREET MODE
-========================== */
+/* STREET MODE */
 body.street::before {
-  background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
-              url("graffiti-bg.jpg");
+  background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url("graffiti-bg.jpg");
   background-size: cover;
   background-position:center;
   animation:none;
 }
 
-body.street h1 {
-  color:#dbe7ff;
-  text-shadow: 0 0 4px rgba(120,160,255,0.4),
-               0 0 10px rgba(120,160,255,0.2);
+body.street .track[data-vibe="street"] {
+  border-left:2px solid rgba(200,200,200,0.2);
 }
 
-body.street .particle { background: rgba(200,200,200,0.2); }
+/* LINKS / FOOTER */
+#experimental-link, #back-link {
+  font-size:0.85rem;
+  color:var(--muted);
+  margin-bottom:15px;
+  cursor:pointer;
+  text-decoration:underline;
+}
 
-/* ==========================
-   LINKS / FOOTER
-========================== */
-#experimental-link, #back-link { font-size:0.85rem; color:var(--muted); margin-bottom:15px; cursor:pointer; text-decoration:underline; }
 #experimental-link:hover, #back-link:hover { color: var(--accent); }
-
 #go-girl-track, #back-link { display: none; }
 
-footer { margin-top:30px; font-size:0.75rem; color:var(--muted); opacity:0.7; }
+footer {
+  margin-top:30px;
+  font-size:0.75rem;
+  color:var(--muted);
+  opacity:0.7;
+}
 
-/* ==========================
-   COUNTER
-========================== */
+/* VISITOR COUNTER */
 .ghost-counter {
   position:fixed;
   bottom:10px;
@@ -210,27 +196,24 @@ footer { margin-top:30px; font-size:0.75rem; color:var(--muted); opacity:0.7; }
 
 .ghost-counter img {
   filter: grayscale(60%) brightness(1)
-    drop-shadow(0 0 6px rgba(161,196,253,0.35))
-    drop-shadow(0 0 14px rgba(161,196,253,0.15));
+         drop-shadow(0 0 6px rgba(161,196,253,0.35))
+         drop-shadow(0 0 14px rgba(161,196,253,0.15));
 }
 </style>
 </head>
 
 <body>
 
-<!-- PARTICLES CONTAINER -->
+<!-- PARTICLES -->
 <div class="particles"></div>
 
 <div class="scroll-wrapper">
   <div class="container">
 
-    <!-- PAGE TITLE -->
     <h1 id="site-title">SAINT3V - October 23rd (Unreleased Demo)</h1>
 
     <!-- ALBUM COVER -->
-    <div class="album-visualizer">
-      <img id="album-cover" src="oct23coverart.jpeg" alt="October 23rd Album Cover" class="album-cover">
-    </div>
+    <img id="album-cover" src="oct23coverart.jpeg" alt="October 23rd Album Cover" class="album-cover">
 
     <!-- TRACKS -->
     <div class="track" id="oct23-track" data-vibe="ethereal">
@@ -282,7 +265,7 @@ for (let i = 0; i < 50; i++) {
 }
 
 /* ==========================
-   AUDIO EVENTS + MEDIA SESSION
+   AUDIO & MEDIA SESSION
 ========================== */
 const tracks = document.querySelectorAll('.track audio');
 const siteTitle = document.getElementById('site-title');
@@ -290,7 +273,9 @@ const defaultTitle = siteTitle.textContent;
 
 tracks.forEach(audio => {
   audio.addEventListener('play', () => {
+    // Pause other tracks
     tracks.forEach(a => { if (a !== audio) a.pause(); });
+
     const title = audio.closest('.track').querySelector('.track-title').textContent;
     siteTitle.textContent = 'SAINT3V - ' + title;
 
@@ -306,9 +291,7 @@ tracks.forEach(audio => {
 
   audio.addEventListener('pause', () => {
     const allPaused = [...tracks].every(a => a.paused);
-    if (allPaused) {
-      siteTitle.textContent = defaultTitle;
-    }
+    if (allPaused) siteTitle.textContent = defaultTitle;
   });
 });
 
