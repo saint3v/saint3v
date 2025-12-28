@@ -443,14 +443,23 @@ tracks.forEach(audio => {
 
   audio.addEventListener('pause', () => {
     const allPaused = [...tracks].every(a => a.paused);
-    if (allPaused) siteTitle.textContent = defaultTitle;
-    updateVibeOnPause();
+    if (!allPaused) return;
+
+    if (isExperimentalMode) {
+       siteTitle.textContent = 'SAINT3V — Experimental Tracks';
+   } else {
+      siteTitle.textContent = defaultTitle;
+   }
+
+   updateVibeOnPause();
   });
+   
 });
 
 /* ==========================
    SWITCH BETWEEN MAIN & EXPERIMENTAL TRACKS
 ========================== */
+let isExperimentalMode = false;
 const oct23Track = document.getElementById('oct23-track');
 const goGirlTrack = document.getElementById('go-girl-track');
 const kittiesTrack = document.getElementById('kitties-track');
@@ -459,8 +468,11 @@ const experimentalLink = document.getElementById('experimental-link');
 const backLink = document.getElementById('back-link');
 
 experimentalLink.addEventListener('click', () => {
+  isExperimentalMode = True; 
+   
   document.body.classList.add('street');
   siteTitle.textContent = 'SAINT3V — Experimental Tracks';
+   
   oct23Track.style.display = 'none';
   kittiesTrack.style.display = 'block';
   goGirlTrack.style.display = 'block';
@@ -471,12 +483,16 @@ experimentalLink.addEventListener('click', () => {
 });
 
 backLink.addEventListener('click', () => {
+  isExperimentalMode = false; 
+   
   document.body.classList.remove('street');
   siteTitle.textContent = defaultTitle;
+   
   oct23Track.style.display = 'block';
   kittiesTrack.style.display = 'none';
   goGirlTrack.style.display = 'none';
   chavoTrack.style.display = 'none'; 
+   
   backLink.style.display = 'none';
   experimentalLink.style.display = 'block';
 });
