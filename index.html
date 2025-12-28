@@ -30,29 +30,22 @@ body {
   position: relative;
   background: #1e1e2e;
 
-  /* Allow vertical scrolling on mobile */
   overflow-x: hidden;
   overflow-y: auto;
 
-  /* Smooth scrolling on iOS */
   -webkit-overflow-scrolling: touch;
 }
-/* Scroll wrapper for main content */
-.scroll-wrapper {
-   display: flex;
-   justify-content: center;
-   width: 100%;
-   min-height: 100vh;
-   
-   /* Enable scrolling inside wrapper */
-   overflow-y: auto;
-   overflow-x: hidden;
 
-   /* smooth scrolling on ios*/
-   -webkit-overflow-scrolling: touch;
+.scroll-wrapper {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  min-height: 100vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
 }
 
-/* Main container */
 .container {
   width: 100%;
   max-width: 480px;
@@ -63,43 +56,28 @@ body {
 }
 
 /* ==========================
-   BACKGROUND GRADIENT (slit-ray + extended night sky)
+   BACKGROUND GRADIENT
 ========================== */
 body::before {
-   pointer-events: none;
-   content: '';
-   position: absolute;
-   inset: 0;
+  pointer-events: none;
+  content: '';
+  position: absolute;
+  inset: 0;
 
-   background: linear-gradient(135deg,
-    /* LEFT SIDE (unchanged from original) */
-      #0d0d1a 0%,        /* deep night-blue start */
-      #0d0d1a 15%,       /* extended deep blue */
-      #1e1e2e 25%,       /* dark tone */
-      #2c2c3e 48%,       /* mid-dark gray/blue */
-
-    /* SLIT (same width as original ~2%) */
-      #7a7aa0 50%,       /* slit start */
-      #1e1e2e 52%,       /* slit end */
-
-    /* RIGHT SIDE (restart with deep blue) */
-      #0d0d1a 60%,       /* deep blue reset */
-      #1e1e2e 70%,       /* dark tone */
-      #3a3a4e 82%,       /* mid-dark gray/blue */
-      #0b0b1f 89%, 
-    /* EXTENDED DEEP BLUE END (restored) */
-      #0b0b1f 100%       /* long night-sky tail */
-   );
-
-   background-size: 400% 400%;
-   z-index: 0;
-   animation: gradientShift 34s linear infinite;
+  background: linear-gradient(135deg,
+    #0d0d1a 0%, #0d0d1a 15%, #1e1e2e 25%, #2c2c3e 48%,
+    #7a7aa0 50%, #1e1e2e 52%,
+    #0d0d1a 60%, #1e1e2e 70%, #3a3a4e 82%, #0b0b1f 89%, #0b0b1f 100%
+  );
+  background-size: 400% 400%;
+  z-index: 0;
+  animation: gradientShift 34s linear infinite;
 }
-   
+
 @keyframes gradientShift {
-   0%   { background-position: 0% 0%; }
-   50%  { background-position: 100% 100%; }
-   100% { background-position: 0% 0%; }
+  0% { background-position: 0% 0%; }
+  50% { background-position: 100% 100%; }
+  100% { background-position: 0% 0%; }
 }
 
 /* ==========================
@@ -138,42 +116,19 @@ h1 {
   letter-spacing:0.6px;
   line-height:1.25;
   color:#eaf2ff;
-  text-shadow:
-    0 0 6px rgba(161,196,253,0.6),
-    0 0 14px rgba(161,196,253,0.4),
-    0 0 30px rgba(161,196,253,0.15);
+  text-shadow: 0 0 6px rgba(161,196,253,0.6),
+               0 0 14px rgba(161,196,253,0.4),
+               0 0 30px rgba(161,196,253,0.15);
 }
 
 /* ==========================
-   HALO VISUALIZER
+   ALBUM COVER
 ========================== */
 .album-visualizer {
   position: relative;
   width: 100%;
   max-width: 360px;
   margin: 0 auto 25px;
-}
-
-.halo {
-  position: absolute;
-  inset: -14px;
-  border-radius: 50%;
-  background: radial-gradient(circle,
-    rgba(161,196,253,0.45),
-    rgba(161,196,253,0.18),
-    transparent 65%);
-  filter: blur(14px);
-  opacity: 0.7;
-  transform: scale(1);
-  transition: background 0.4s ease;
-  z-index: 0;
-}
-
-body.street .halo {
-  background: radial-gradient(circle,
-    rgba(180,180,180,0.35),
-    rgba(120,120,120,0.15),
-    transparent 65%);
 }
 
 .album-cover {
@@ -200,25 +155,13 @@ body.street .halo {
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.track[data-vibe="street"] {
-  border-left:2px solid rgba(120,160,255,0.35);
-}
+.track[data-vibe="street"] { border-left:2px solid rgba(120,160,255,0.35); }
 
-.track:hover {
-  transform:translateY(-2px);
-  box-shadow:0 10px 28px rgba(0,0,0,0.5);
-}
+.track:hover { transform:translateY(-2px); box-shadow:0 10px 28px rgba(0,0,0,0.5); }
 
-.track-title {
-  font-size:1rem;
-  color:var(--muted);
-  margin-bottom:12px;
-}
+.track-title { font-size:1rem; color:var(--muted); margin-bottom:12px; }
 
-audio {
-  width:100%;
-  outline:none;
-  border-radius:10px;
+audio { width:100%; outline:none; border-radius:10px;
   filter: invert(90%) sepia(5%) saturate(15%) hue-rotate(190deg);
 }
 
@@ -226,9 +169,8 @@ audio {
    STREET MODE
 ========================== */
 body.street::before {
-  background:
-    linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
-    url("graffiti-bg.jpg");
+  background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+              url("graffiti-bg.jpg");
   background-size: cover;
   background-position:center;
   animation:none;
@@ -236,39 +178,21 @@ body.street::before {
 
 body.street h1 {
   color:#dbe7ff;
-  text-shadow:
-    0 0 4px rgba(120,160,255,0.4),
-    0 0 10px rgba(120,160,255,0.2);
+  text-shadow: 0 0 4px rgba(120,160,255,0.4),
+               0 0 10px rgba(120,160,255,0.2);
 }
 
-body.street .particle {
-  background: rgba(200,200,200,0.2);
-}
+body.street .particle { background: rgba(200,200,200,0.2); }
 
 /* ==========================
    LINKS / FOOTER
 ========================== */
-#experimental-link, #back-link {
-  font-size:0.85rem;
-  color:var(--muted);
-  margin-bottom:15px;
-  cursor:pointer;
-  text-decoration:underline;
-}
+#experimental-link, #back-link { font-size:0.85rem; color:var(--muted); margin-bottom:15px; cursor:pointer; text-decoration:underline; }
+#experimental-link:hover, #back-link:hover { color: var(--accent); }
 
-#experimental-link:hover, #back-link:hover {
-  color: var(--accent);
-}
-
-/* Hide tracks initially */
 #go-girl-track, #back-link { display: none; }
 
-footer {
-  margin-top:30px;
-  font-size:0.75rem;
-  color:var(--muted);
-  opacity:0.7;
-}
+footer { margin-top:30px; font-size:0.75rem; color:var(--muted); opacity:0.7; }
 
 /* ==========================
    COUNTER
@@ -303,13 +227,9 @@ footer {
     <!-- PAGE TITLE -->
     <h1 id="site-title">SAINT3V - October 23rd (Unreleased Demo)</h1>
 
-    <!-- VISUALIZER WRAPPER -->
+    <!-- ALBUM COVER -->
     <div class="album-visualizer">
-      <div class="halo" id="halo"></div>
-      <img id="album-cover"
-           src="oct23coverart.jpeg"
-           alt="October 23rd Album Cover"
-           class="album-cover">
+      <img id="album-cover" src="oct23coverart.jpeg" alt="October 23rd Album Cover" class="album-cover">
     </div>
 
     <!-- TRACKS -->
@@ -344,96 +264,33 @@ footer {
   <img src="https://hitscounter.dev/api/hit?url=https%3A%2F%2Fsdvantage.com%2F&label=Visitors&icon=person-raised-hand&color=%233d8bfd&style=plastic&tz=US%2FPacific">
 </div>
 
-
-
-
-<!-- ===========================
-   SCRIPTS
-   ============================ -->
-   
 <script>
 /* ==========================
-   PARTICLES (Visual Only)
+   PARTICLES
 ========================== */
 const particleContainer = document.querySelector('.particles');
-
 for (let i = 0; i < 50; i++) {
   const p = document.createElement('div');
   p.className = 'particle';
-
   const size = Math.random() * 4 + 2;
   p.style.width = size + 'px';
   p.style.height = size + 'px';
   p.style.left = Math.random() * 100 + '%';
   p.style.animationDuration = 5 + Math.random() * 10 + 's';
   p.style.animationDelay = Math.random() * 10 + 's';
-
   particleContainer.appendChild(p);
 }
 
 /* ==========================
-   AUDIO + VISUALIZER SETUP
+   AUDIO EVENTS + MEDIA SESSION
 ========================== */
 const tracks = document.querySelectorAll('.track audio');
-const halo = document.getElementById('halo');
 const siteTitle = document.getElementById('site-title');
 const defaultTitle = siteTitle.textContent;
 
-let audioCtx;
-let analyser;
-let dataArray;
-let raf;
-const audioSources = new Map();
-
-/* Connect visualizer to audio (ONCE PER TRACK) */
-function connectVisualizer(audio) {
-
-  cancelAnimationFrame(raf);
-
-  if (!audioCtx) {
-    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    analyser = audioCtx.createAnalyser();
-    analyser.fftSize = 256;
-    dataArray = new Uint8Array(analyser.frequencyBinCount);
-  }
-
-  if (!audioSources.has(audio)) {
-    const source = audioCtx.createMediaElementSource(audio);
-    audioSources.set(audio, source);
-    source.connect(analyser);
-    analyser.connect(audioCtx.destination);
-  }
-
-  if (audioCtx.state === 'suspended') {
-    audioCtx.resume();
-  }
-
-  animateHalo();
-}
-
-/* Halo animation */
-function animateHalo() {
-  raf = requestAnimationFrame(animateHalo);
-
-  analyser.getByteFrequencyData(dataArray);
-
-  let bass = 0;
-  for (let i = 0; i < 10; i++) bass += dataArray[i];
-  bass /= 10;
-
-  halo.style.transform = `scale(${1 + bass / 520})`;
-  halo.style.opacity = 0.55 + bass / 650;
-}
-
-
-   
-/* ==========================
-   AUDIO EVENTS
-========================== */
 tracks.forEach(audio => {
   audio.addEventListener('play', () => {
     tracks.forEach(a => { if (a !== audio) a.pause(); });
-    connectVisualizer(audio);
     const title = audio.closest('.track').querySelector('.track-title').textContent;
     siteTitle.textContent = 'SAINT3V - ' + title;
 
@@ -447,58 +304,14 @@ tracks.forEach(audio => {
     }
   });
 
-  // PAUSE listener here, outside play listener
   audio.addEventListener('pause', () => {
     const allPaused = [...tracks].every(a => a.paused);
     if (allPaused) {
-      cancelAnimationFrame(raf);
-      halo.style.transform = 'scale(1)';
-      halo.style.opacity = '0.6';
       siteTitle.textContent = defaultTitle;
-      if (audioCtx && audioCtx.state === 'running') audioCtx.suspend();
     }
   });
 });
 
-/* ==========================
-   TAB / VISIBILITY HANDLING
-========================== */
-
-/*
-document.addEventListener('visibilitychange', () => {
-  if (document.hidden) {
-
-    tracks.forEach(audio => audio.pause());
-    cancelAnimationFrame(raf);
-
-    if (audioCtx && audioCtx.state === 'running') {
-      audioCtx.suspend();
-    }
-  }
-});
-*/
- 
-/* =================================
-VISUALIZER SLEEP AUDIO CONT.
-================================== */
-document.addEventListener('visibilitychange', () => {
-   if (document.hidden) {
-      cancelAnimationFrame(raf);
-
-      if (audioCtx && audioCtx.state === 'running') {
-         audioCtx.suspend(); //halo sleeps
-      }
-   } else {
-      if (audioCtx && audioCtx.state === 'suspended') {
-         audioCtx.resume();
-         animateHalo(); // halo wakes
-      }
-   }
-});
-
-
-
-   
 /* ==========================
    EXPERIMENTAL / MAIN TOGGLE
 ========================== */
@@ -510,10 +323,8 @@ const backLink = document.getElementById('back-link');
 experimentalLink.addEventListener('click', () => {
   document.body.classList.add('street');
   siteTitle.textContent = 'SAINT3V — Experimental Tracks';
-
   oct23Track.style.display = 'none';
   goGirlTrack.style.display = 'block';
-
   experimentalLink.style.display = 'none';
   backLink.style.display = 'block';
 });
@@ -521,14 +332,11 @@ experimentalLink.addEventListener('click', () => {
 backLink.addEventListener('click', () => {
   document.body.classList.remove('street');
   siteTitle.textContent = defaultTitle;
-
   oct23Track.style.display = 'block';
   goGirlTrack.style.display = 'none';
-
   backLink.style.display = 'none';
   experimentalLink.style.display = 'block';
 });
-   
 </script>
 
 </body>
