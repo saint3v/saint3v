@@ -384,13 +384,20 @@ for (let i = 0; i < 50; i++) {
   // set random horizontal position
   particle.style.left = Math.random() * 100 + '%';
 
-  // set random speed and delay
-  const BASE_SPEED = 9;
-  const SPEED_VARIANCE = 8; 
-  particle.style.animationDuration = (BASE_SPEED + Math.random() * SPEED_VARIANCE) + 's';
-  particle.style.animationDelay = Math.random() * SPEED_VARIANCE + 's';
+// set random speed and fake elapsed time (pre-spawned particles)
+const BASE_SPEED = 9;
+const SPEED_VARIANCE = 8;
 
-  particleContainer.appendChild(particle);
+const rand = Math.random(); // ONE random value per particle
+
+const duration = BASE_SPEED + rand * SPEED_VARIANCE;
+
+particle.style.animationDuration = duration + 's';
+
+// negative delay = pretend animation already started
+particle.style.animationDelay = -(rand * duration) + 's';
+
+particleContainer.appendChild(particle);
 }
 
 /*===========================================
