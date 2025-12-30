@@ -385,8 +385,10 @@ for (let i = 0; i < 50; i++) {
   particle.style.left = Math.random() * 100 + '%';
 
   // set random speed and delay
-  particle.style.animationDuration = (5 + Math.random() * 10) + 's';
-  particle.style.animationDelay = Math.random() * 10 + 's';
+  const BASE_SPEED = 12;
+  const SPEED_VARIANCE = 8; 
+  particle.style.animationDuration = (BASE_SPEED + Math.random() * SPEED_VARIANCE) + 's';
+  particle.style.animationDelay = Math.random() * SPEED_VARIANCE + 's';
 
   particleContainer.appendChild(particle);
 }
