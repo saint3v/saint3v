@@ -451,6 +451,7 @@ startRareShootingStars();
 const tracks = document.querySelectorAll('.track audio');
 const siteTitle = document.getElementById('site-title');
 const defaultTitle = siteTitle.textContent;
+const albumVisualizer = document.querySelector('.album-visualizer');
 
 // Change background "vibe" when a track plays
 function updateVibeOnPlay(audio) {
@@ -572,6 +573,8 @@ experimentalLink.addEventListener('click', () => {
   kittiesTrack.style.display = 'block';
   goGirlTrack.style.display = 'block';
   chavoTrack.style.display = 'block'; 
+
+  albumVisualizer.style.display = 'none'; // ✅ hide cover 
    
   experimentalLink.style.display = 'none';
   backLink.style.display = 'block';
@@ -587,6 +590,8 @@ backLink.addEventListener('click', () => {
   kittiesTrack.style.display = 'none';
   goGirlTrack.style.display = 'none';
   chavoTrack.style.display = 'none'; 
+
+  albumVisualizer.style.display = 'block'; // ✅ restore cover 
    
   backLink.style.display = 'none';
   experimentalLink.style.display = 'block';
