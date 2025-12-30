@@ -384,18 +384,21 @@ for (let i = 0; i < 50; i++) {
   // set random horizontal position
   particle.style.left = Math.random() * 100 + '%';
 
-// set random speed and fake elapsed time (pre-spawned particles)
+// set random speed and fully de-synced phase
 const BASE_SPEED = 9;
 const SPEED_VARIANCE = 8;
 
-const rand = Math.random(); // ONE random value per particle
+const duration =
+  BASE_SPEED + Math.random() * SPEED_VARIANCE;
 
-const duration = BASE_SPEED + rand * SPEED_VARIANCE;
+//  phase must be independent of speed
+const phaseOffset =
+  Math.random() * duration;
 
 particle.style.animationDuration = duration + 's';
 
-// negative delay = pretend animation already started
-particle.style.animationDelay = -(rand * duration) + 's';
+// negative delay = already mid-animation
+particle.style.animationDelay = -phaseOffset + 's';
 
 particleContainer.appendChild(particle);
 }
