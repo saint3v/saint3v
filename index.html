@@ -135,6 +135,15 @@ body::before {
   50% { opacity: calc(var(--base-opacity) * 0.5); }
 }
 
+   /* subtle random flicker for stars */
+@keyframes starFlicker {
+  0%, 20%, 40%, 60%, 80%, 100% { opacity: var(--base-opacity); }
+  10% { opacity: calc(var(--base-opacity) * 0.6); }
+  30% { opacity: calc(var(--base-opacity) * 0.8); }
+  50% { opacity: calc(var(--base-opacity) * 0.5); }
+  70% { opacity: calc(var(--base-opacity) * 0.7); }
+  90% { opacity: calc(var(--base-opacity) * 0.9); }
+}
 
 
    
@@ -419,14 +428,12 @@ for (let i = 0; i < 50; i++) {
   particle.style.animationDelay = `-${phaseOffset}s`;
 
   // --------------------------
-  // MICRO-TWINKLE
+  // STAR FLICKER
   // --------------------------
-  const twinkleDuration = 3 + Math.random() * 3; // 3–6s
-  const twinkleDelay = Math.random() * twinkleDuration;
-  particle.style.animation += `, twinkle ${twinkleDuration}s ease-in-out infinite`;
-  particle.style.animationDelay += `, -${twinkleDelay}s`;
-
-  particleContainer.appendChild(particle);
+  const flickerDuration = 2 + Math.random() * 2; // 2–4s
+  const flickerDelay = Math.random() * flickerDuration;
+  particle.style.animation += `, starFlicker ${flickerDuration}s steps(1, start) infinite`;
+  particle.style.animationDelay += `, -${flickerDelay}s`;
 }
 /*===========================================
    Shooting Stars - Rare & Consistent Angle
