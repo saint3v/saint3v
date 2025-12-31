@@ -429,7 +429,7 @@ for (let i = 0; i < totalParticles; i++) {
     const flickerDuration = .1 + Math.random() * .2; // .3-.6
     const flickerDelay = Math.random() * flickerDuration;
     animationString += `, starFlicker ${flickerDuration}s steps(1, start) infinite ${-flickerDelay}s`;
-    particle.style.outline = '1px solid red' ; 
+    /*\particle.style.outline = '1px solid red' ; */
   }
 
   particle.style.animation = animationString;
