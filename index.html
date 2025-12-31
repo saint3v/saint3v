@@ -382,34 +382,42 @@ footer { margin-top:30px; font-size:0.75rem; color:var(--muted); opacity:0.7; }
 const particleContainer = document.querySelector('.particles');
 
 for (let i = 0; i < 50; i++) {
-  const particle = document.createElement('div'); // create div
+  const particle = document.createElement('div');
   particle.className = 'particle';
 
-  // set random size
-  const size = Math.random() * 4 + 2; // 2-6px
+  // --------------------------
+  // DEPTH (size controls everything)
+  // --------------------------
+
+  // depth value: 0 (far) → 1 (near)
+  const depth = Math.random();
+
+  // size based on depth
+  const size = 2 + depth * 4; // 2–6px
   particle.style.width = size + 'px';
   particle.style.height = size + 'px';
 
-  // set random horizontal position
+  // brightness based on depth
+  particle.style.opacity = 0.25 + depth * 0.55;
+
+  // horizontal position
   particle.style.left = Math.random() * 100 + '%';
 
-// set random speed and fully de-synced phase
-const BASE_SPEED = 9;
-const SPEED_VARIANCE = 8;
+  // speed based on depth (near = faster)
+  const BASE_SPEED = 14;
+  const SPEED_VARIANCE = -7;
 
-const duration =
-  BASE_SPEED + Math.random() * SPEED_VARIANCE;
+  const duration =
+    BASE_SPEED + depth * SPEED_VARIANCE;
 
-//  phase must be independent of speed
-const phaseOffset =
-  Math.random() * duration;
+  // fully de-synced phase
+  const phaseOffset =
+    Math.random() * duration;
 
-particle.style.animationDuration = duration + 's';
+  particle.style.animationDuration = duration + 's';
+  particle.style.animationDelay = -phaseOffset + 's';
 
-// negative delay = already mid-animation
-particle.style.animationDelay = -phaseOffset + 's';
-
-particleContainer.appendChild(particle);
+  particleContainer.appendChild(particle);
 }
 
 /*===========================================
