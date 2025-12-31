@@ -393,7 +393,7 @@ footer { margin-top:30px; font-size:0.75rem; color:var(--muted); opacity:0.7; }
    
 <script>
 /* ==========================
-   CREATE FLOATING PARTICLES WITH DEPTH + TWINKLE
+   CREATE FLOATING PARTICLES WITH DEPTH + TWINKLE + STAR FLICKER
 ========================== */
 const particleContainer = document.querySelector('.particles');
 
@@ -417,23 +417,25 @@ for (let i = 0; i < 50; i++) {
   // horizontal position
   particle.style.left = Math.random() * 100 + '%';
 
-  // speed based on depth
+  // floating speed based on depth
   const FAR_DURATION = 25;  // slowest
   const NEAR_DURATION = 14; // fastest
   const duration = FAR_DURATION + depth * (NEAR_DURATION - FAR_DURATION);
-
-  // fully de-synced phase
   const phaseOffset = Math.random() * duration;
-  particle.style.animation = `floatParticle ${duration}s linear infinite`;
-  particle.style.animationDelay = `-${phaseOffset}s`;
 
   // --------------------------
   // STAR FLICKER
   // --------------------------
   const flickerDuration = 2 + Math.random() * 2; // 2–4s
   const flickerDelay = Math.random() * flickerDuration;
-  particle.style.animation += `, starFlicker ${flickerDuration}s steps(1, start) infinite`;
-  particle.style.animationDelay += `, -${flickerDelay}s`;
+
+  // Combine both animations properly
+  particle.style.animation = `
+    floatParticle ${duration}s linear infinite ${-phaseOffset}s,
+    starFlicker ${flickerDuration}s steps(1, start) infinite ${-flickerDelay}s
+  `;
+
+  particleContainer.appendChild(particle);
 }
 /*===========================================
    Shooting Stars - Rare & Consistent Angle
