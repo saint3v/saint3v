@@ -392,12 +392,15 @@ footer { margin-top:30px; font-size:0.75rem; color:var(--muted); opacity:0.7; }
    
    
 <script>
+<script>
 /* ==========================
-   CREATE FLOATING PARTICLES WITH DEPTH + TWINKLE + STAR FLICKER
+   CREATE FLOATING PARTICLES WITH DEPTH + OPTIONAL STAR FLICKER
 ========================== */
 const particleContainer = document.querySelector('.particles');
+const totalParticles = 50;
+const flickerChance = 0.2; // 20% of stars will flicker
 
-for (let i = 0; i < 50; i++) {
+for (let i = 0; i < totalParticles; i++) {
   const particle = document.createElement('div');
   particle.className = 'particle';
 
@@ -424,16 +427,20 @@ for (let i = 0; i < 50; i++) {
   const phaseOffset = Math.random() * duration;
 
   // --------------------------
-  // STAR FLICKER
+  // BASE ANIMATION (float)
   // --------------------------
-  const flickerDuration = 2 + Math.random() * 2; // 2–4s
-  const flickerDelay = Math.random() * flickerDuration;
+  let animationString = `floatParticle ${duration}s linear infinite ${-phaseOffset}s`;
 
-  // Combine both animations properly
-  particle.style.animation = `
-    floatParticle ${duration}s linear infinite ${-phaseOffset}s,
-    starFlicker ${flickerDuration}s steps(1, start) infinite ${-flickerDelay}s
-  `;
+  // --------------------------
+  // RANDOM STAR FLICKER
+  // --------------------------
+  if (Math.random() < flickerChance) {
+    const flickerDuration = 2 + Math.random() * 2; // 2–4s
+    const flickerDelay = Math.random() * flickerDuration;
+    animationString += `, starFlicker ${flickerDuration}s steps(1, start) infinite ${-flickerDelay}s`;
+  }
+
+  particle.style.animation = animationString;
 
   particleContainer.appendChild(particle);
 }
