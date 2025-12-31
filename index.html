@@ -404,16 +404,17 @@ for (let i = 0; i < 50; i++) {
   particle.style.left = Math.random() * 100 + '%';
 
   // speed based on depth (near = faster)
-  const BASE_SPEED = 14;
-  const SPEED_VARIANCE = -7;
+  const FAR_DURATION = 25; //slowest for far away particles
+  const NEAR_DURATION = 14; // fastest for near particles
 
+   // linear interpolation between far and near
   const duration =
-    BASE_SPEED + depth * SPEED_VARIANCE;
-
+     FAR_DURATION + depth * (NEAR_DURATION - FAR_DURATION);
+   
   // fully de-synced phase
   const phaseOffset =
     Math.random() * duration;
-
+  
   particle.style.animationDuration = duration + 's';
   particle.style.animationDelay = -phaseOffset + 's';
 
