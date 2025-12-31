@@ -109,8 +109,6 @@ body::before {
 
 .particle {
   position: absolute;
-  width: 5px;
-  height: 5px;
   border-radius: 50%; 
   background: radial-gradient(
     circle,
@@ -120,26 +118,22 @@ body::before {
     rgba(161,196,253,0.1) 70%,
     transparent 100%
   );
-
-  /* two animations: float + twinkle */
-  animation: 
-    floatParticle linear infinite,
-    twinkle 4s ease-in-out infinite;
+  
+  /* animations will be applied via JS */
 }
 
-/* float animation (Y + scale) */
+/* floating animation (top → bottom) */
 @keyframes floatParticle {
   0% { transform: translateY(100vh) scale(0.5); opacity: 0; }
   10% { opacity: 1; }
-  100% { transform: translateY(-10vh) scale(1); opacity: 0.4; }
+  100% { transform: translateY(-10vh) scale(1); opacity: var(--base-opacity); }
 }
 
-/* subtle micro-twinkle */
+/* subtle twinkle effect */
 @keyframes twinkle {
   0%, 100% { opacity: var(--base-opacity); }
   50% { opacity: calc(var(--base-opacity) * 0.7); }
 }
-
 
 
 
@@ -401,41 +395,39 @@ for (let i = 0; i < 50; i++) {
   // --------------------------
   // DEPTH (size controls everything)
   // --------------------------
+  const depth = Math.random(); // 0 = far, 1 = near
 
-  // depth value: 0 (far) → 1 (near)
-  const depth = Math.random();
-
-  // size based on depth
+  // size & brightness
   const size = 2 + depth * 4; // 2–6px
   particle.style.width = size + 'px';
   particle.style.height = size + 'px';
-
-  // brightness based on depth
   const baseOpacity = 0.25 + depth * 0.55;
   particle.style.opacity = baseOpacity;
-
-  // store base opacity as CSS variable for twinkle
   particle.style.setProperty('--base-opacity', baseOpacity);
 
   // horizontal position
   particle.style.left = Math.random() * 100 + '%';
 
-  // speed based on depth (near = faster)
-  const FAR_DURATION = 25;  // slowest for far away particles
-  const NEAR_DURATION = 14; // fastest for near particles
-
-  // linear interpolation between far and near
+  // speed based on depth
+  const FAR_DURATION = 25;  // slowest
+  const NEAR_DURATION = 14; // fastest
   const duration = FAR_DURATION + depth * (NEAR_DURATION - FAR_DURATION);
 
   // fully de-synced phase
   const phaseOffset = Math.random() * duration;
+  particle.style.animation = `floatParticle ${duration}s linear infinite`;
+  particle.style.animationDelay = `-${phaseOffset}s`;
 
-  particle.style.animationDuration = duration + 's';
-  particle.style.animationDelay = -phaseOffset + 's';
+  // --------------------------
+  // MICRO-TWINKLE
+  // --------------------------
+  const twinkleDuration = 3 + Math.random() * 3; // 3–6s
+  const twinkleDelay = Math.random() * twinkleDuration;
+  particle.style.animation += `, twinkle ${twinkleDuration}s ease-in-out infinite`;
+  particle.style.animationDelay += `, -${twinkleDelay}s`;
 
   particleContainer.appendChild(particle);
 }
-
 /*===========================================
    Shooting Stars - Rare & Consistent Angle
 ===========================================*/
