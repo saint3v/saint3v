@@ -132,12 +132,8 @@ body::before {
 
    /* subtle random flicker for stars */
 @keyframes starFlicker {
-  0%, 20%, 40%, 60%, 80%, 100% { opacity: var(--base-opacity); }
-  10% { opacity: calc(var(--base-opacity) * 0.85); }
-  30% { opacity: calc(var(--base-opacity) * 0.9); }
-  50% { opacity: calc(var(--base-opacity) * 0.8); }
-  70% { opacity: calc(var(--base-opacity) * 0.9); }
-  90% { opacity: calc(var(--base-opacity) * 0.85); }
+  0%, 100% { filter: brightness(1); }
+  50% { filter: brightness(1.35); }
 }
 
 
