@@ -434,7 +434,7 @@ for (let i = 0; i < totalParticles; i++) {
   // RANDOM STAR FLICKER
   // --------------------------
   if (Math.random() < flickerChance) {
-    const flickerDuration = 2 + Math.random() * 2; // 2–4s
+    const flickerDuration = .3 + Math.random() * .3; // 2–4s
     const flickerDelay = Math.random() * flickerDuration;
     animationString += `, starFlicker ${flickerDuration}s steps(1, start) infinite ${-flickerDelay}s`;
   }
