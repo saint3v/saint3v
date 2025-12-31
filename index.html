@@ -388,8 +388,8 @@ footer { margin-top:30px; font-size:0.75rem; color:var(--muted); opacity:0.7; }
    CREATE FLOATING PARTICLES WITH DEPTH + OPTIONAL STAR FLICKER
 ========================== */
 const particleContainer = document.querySelector('.particles');
-const totalParticles = 50;
-const flickerChance = 0.2; // 20% of stars will flicker
+const totalParticles = 40;
+const flickerChance = 0.1; // 20% of stars will flicker
 
 for (let i = 0; i < totalParticles; i++) {
   const particle = document.createElement('div');
@@ -435,6 +435,20 @@ for (let i = 0; i < totalParticles; i++) {
 
   particleContainer.appendChild(particle);
 }
+
+/* ==========================
+   FIX #2 — PAUSE WHEN TAB IS HIDDEN
+========================== */
+document.addEventListener('visibilitychange', () => {
+  const particles = document.querySelectorAll('.particle');
+  const state = document.hidden ? 'paused' : 'running';
+
+  particles.forEach(p => {
+    p.style.animationPlayState = state;
+  });
+});
+
+   
 /*===========================================
    Shooting Stars - Rare & Consistent Angle
 ===========================================*/
@@ -628,6 +642,8 @@ backLink.addEventListener('click', () => {
   backLink.style.display = 'none';
   experimentalLink.style.display = 'block';
 });
+
+   
 </script>
 
 </body>
