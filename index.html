@@ -108,29 +108,42 @@ body::before {
 }
 
 .particle {
-  position:absolute;
-  width:5px;
-  height:5px;
-  border-radius:50%; 
-   
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%; 
   background: radial-gradient(
-  circle,
-  rgba(255,255,255,0.9) 0%,
-  rgba(161,196,253,0.6) 30%,
-  rgba(161,196,253,0.3) 55%,
-  rgba(161,196,253,0.1) 70%,
-  transparent 100%);
-   
-  
-  animation: floatParticle linear infinite;
+    circle,
+    rgba(255,255,255,0.9) 0%,
+    rgba(161,196,253,0.6) 30%,
+    rgba(161,196,253,0.3) 55%,
+    rgba(161,196,253,0.1) 70%,
+    transparent 100%
+  );
+
+  /* two animations: float + twinkle */
+  animation: 
+    floatParticle linear infinite,
+    twinkle 4s ease-in-out infinite;
 }
 
+/* float animation (Y + scale) */
 @keyframes floatParticle {
   0% { transform: translateY(100vh) scale(0.5); opacity: 0; }
-  10% { opacity:1; }
-  100% { transform: translateY(-10vh) scale(1); opacity:.40; }
+  10% { opacity: 1; }
+  100% { transform: translateY(-10vh) scale(1); opacity: 0.4; }
 }
 
+/* subtle micro-twinkle */
+@keyframes twinkle {
+  0%, 100% { opacity: var(--base-opacity); }
+  50% { opacity: calc(var(--base-opacity) * 0.7); }
+}
+
+
+
+
+   
 /* ==========================
    PAGE TITLE
 ========================== */
@@ -377,7 +390,7 @@ footer { margin-top:30px; font-size:0.75rem; color:var(--muted); opacity:0.7; }
    
 <script>
 /* ==========================
-   CREATE FLOATING PARTICLES
+   CREATE FLOATING PARTICLES WITH DEPTH + TWINKLE
 ========================== */
 const particleContainer = document.querySelector('.particles');
 
@@ -398,23 +411,25 @@ for (let i = 0; i < 50; i++) {
   particle.style.height = size + 'px';
 
   // brightness based on depth
-  particle.style.opacity = 0.25 + depth * 0.55;
+  const baseOpacity = 0.25 + depth * 0.55;
+  particle.style.opacity = baseOpacity;
+
+  // store base opacity as CSS variable for twinkle
+  particle.style.setProperty('--base-opacity', baseOpacity);
 
   // horizontal position
   particle.style.left = Math.random() * 100 + '%';
 
   // speed based on depth (near = faster)
-  const FAR_DURATION = 25; //slowest for far away particles
+  const FAR_DURATION = 25;  // slowest for far away particles
   const NEAR_DURATION = 14; // fastest for near particles
 
-   // linear interpolation between far and near
-  const duration =
-     FAR_DURATION + depth * (NEAR_DURATION - FAR_DURATION);
-   
+  // linear interpolation between far and near
+  const duration = FAR_DURATION + depth * (NEAR_DURATION - FAR_DURATION);
+
   // fully de-synced phase
-  const phaseOffset =
-    Math.random() * duration;
-  
+  const phaseOffset = Math.random() * duration;
+
   particle.style.animationDuration = duration + 's';
   particle.style.animationDelay = -phaseOffset + 's';
 
