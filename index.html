@@ -104,7 +104,7 @@ body::before {
   height: 100%;
   pointer-events: none;
   overflow: hidden;
-  z-index: 0;
+  z-index: 1;
 }
 
 .particle {
@@ -129,11 +129,6 @@ body::before {
   100% { transform: translateY(-10vh) scale(.6); opacity: var(--base-opacity); }
 }
 
-/* subtle twinkle effect */
-@keyframes twinkle {
-  0%, 100% { opacity: var(--base-opacity); }
-  50% { opacity: calc(var(--base-opacity) * 0.5); }
-}
 
    /* subtle random flicker for stars */
 @keyframes starFlicker {
@@ -228,7 +223,7 @@ h1 {
    TRACKS STYLE
 ========================== */
 .track {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.02);
   border-radius: var(--radius);
   padding:20px;
   margin-bottom:20px;
@@ -364,7 +359,7 @@ footer { margin-top:30px; font-size:0.75rem; color:var(--muted); opacity:0.7; }
     <div class="track" id="chavo-track" data-vibe="street">
       <div class="track-title">Chavo Del Seis</div>
       <audio controls preload="none">
-        <source src="Chavo_del_sietemp3.m4a" type="audio/mp4">
+        <source src="Chavo_del_sietemp3.m4a" type="audio/m4a">
       </audio>
       <button class="loop-btn">↺ Loop</button> 
     </div>  
