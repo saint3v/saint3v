@@ -133,7 +133,7 @@ body::before {
    /* subtle random flicker for stars */
 @keyframes starFlicker {
   0%, 100% { opacity: var(--base-opacity); }
-  50% { opacity: calc(var(--base-opacity) * 1.15); }
+  50% { opacity: calc(var(--base-opacity) * 1.5); }
 }
 
 
@@ -429,6 +429,7 @@ for (let i = 0; i < totalParticles; i++) {
     const flickerDuration = .3 + Math.random() * .3; // .3-.6
     const flickerDelay = Math.random() * flickerDuration;
     animationString += `, starFlicker ${flickerDuration}s steps(1, start) infinite ${-flickerDelay}s`;
+    particle.style.outline = '1px solid red ; 
   }
 
   particle.style.animation = animationString;
