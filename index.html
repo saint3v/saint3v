@@ -290,7 +290,7 @@ body.street .particle { background: rgba(200,200,200,0.2); }
 
 #experimental-link:hover, #back-link:hover { color: var(--accent); }
 
-#chavo-track, #kitties-track, #go-girl-track, #back-link { display: none; }
+#temporary-track, #chavo-track, #kitties-track, #go-girl-track, #back-link { display: none; }
 
 /*====================================
    ===============================
@@ -336,7 +336,15 @@ footer { margin-top:30px; font-size:0.75rem; color:var(--muted); opacity:0.7; }
       </audio>
       <button class="loop-btn">↺ Loop</button>
     </div>
-
+      
+    <div class="track" id="temporary-track" data-vibe="ethereal">
+      <div class="track-title">Temporary (Unreleased Demo)</div>
+      <audio controls preload="none">
+        <source src="temporary.mp3" type="audio/mpeg">
+      </audio>   
+      <button class="loop-btn">↺ Loop</button>  
+    </div>
+     
     <div class="track" id="kitties-track" data-vibe="ethereal-override">
       <div class="track-title">I volunteered to rehab abandoned kitties...i don't(i do) (Unreleased Demo)</div>
       <audio controls preload="none">
@@ -617,6 +625,7 @@ experimentalLink.addEventListener('click', () => {
   siteTitle.textContent = 'SAINT3V — Experimental Tracks';
    
   oct23Track.style.display = 'none';
+  temporaryTrack.style.display = 'block'; 
   kittiesTrack.style.display = 'block';
   goGirlTrack.style.display = 'block';
   chavoTrack.style.display = 'block'; 
@@ -634,6 +643,7 @@ backLink.addEventListener('click', () => {
   siteTitle.textContent = defaultTitle;
    
   oct23Track.style.display = 'block';
+  temporaryTrack.style.display = 'none'; 
   kittiesTrack.style.display = 'none';
   goGirlTrack.style.display = 'none';
   chavoTrack.style.display = 'none'; 
