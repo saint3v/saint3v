@@ -309,6 +309,31 @@ body.street .particle { background: rgba(200,200,200,0.2); }
 
    
 footer { margin-top:30px; font-size:0.75rem; color:var(--muted); opacity:0.7; }
+
+/* ==========================
+   SITE CODE SIGNATURE
+   Bottom-right watermark
+========================== */
+.site-signature {
+  position: fixed;
+  bottom: 12px;
+  right: 14px;
+  font-size: 0.7rem;
+  color: var(--muted);
+  opacity: 0.35;
+  letter-spacing: 0.4px;
+  pointer-events: none; /* never blocks clicks */
+  z-index: 9998;
+}
+
+/* Slight glow on large screens */
+@media (min-width: 600px) {
+  .site-signature {
+    text-shadow: 0 0 6px rgba(161,196,253,0.25);
+  }
+}
+
+
 </style>
 </head>
 
@@ -383,9 +408,8 @@ footer { margin-top:30px; font-size:0.75rem; color:var(--muted); opacity:0.7; }
     <div id="back-link">Back to Main Tracks</div>
 
     <footer>
-      © 2025 SAINT3V | Indie Rock / Rap
+      © 2025 SAINT3V | Indie Rock / Pop / Shoegaze / Rap
       <div>Making music while I'm still here.</div>
-      <div>Website code by yours truly.</div> 
     </footer>
 
   </div>
@@ -398,7 +422,11 @@ footer { margin-top:30px; font-size:0.75rem; color:var(--muted); opacity:0.7; }
 
 <div class="shooting-stars"></div>
 
+<div class="site-signature">
+  Site code by yours truly. — SAINT3V
+</div>
    
+</body>
    
 <script>
 /* ==========================
@@ -670,5 +698,4 @@ backLink.addEventListener('click', () => {
    
 </script>
 
-</body>
 </html>
