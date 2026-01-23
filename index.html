@@ -10,32 +10,45 @@
 <meta property="og:type" content="music.album">
 
 <style>
-/* ==========================
-   COLORS, FONTS, AND RADII
-========================== */
+/* ============================================================================
+   SECTION 1: CSS VARIABLES (Color Palette & Design Tokens)
+   - All colors and design values in one place for easy customization
+============================================================================ */
 :root {
-  --panel: rgba(255, 255, 255, 0.05);  /* semi-transparent panel background */
-  --text: #f0f0f8;                     /* main text color */
-  --muted: #c0c0d0;                     /* lighter text for subtitles */
-  --accent: #a1c4fd;                    /* highlight color */
-  --radius: 12px;                       /* rounded corners */
-  --font-main: 'Arial', sans-serif;     /* main font */
+  /* Colors */
+  --panel: rgba(255, 255, 255, 0.05);
+  --text: #f0f0f8;
+  --muted: #c0c0d0;
+  --accent: #a1c4fd;
+  
+  /* Design tokens */
+  --radius: 12px;
+  --font-main: 'Arial', sans-serif;
 }
 
-/* ==========================
-   BASIC PAGE STYLES
-========================== */
-* { box-sizing: border-box; margin:0; padding:0; }
+/* ============================================================================
+   SECTION 2: BASE STYLES (Reset & Body)
+   - Foundation styles that apply to the entire page
+============================================================================ */
+* { 
+  box-sizing: border-box; 
+  margin: 0; 
+  padding: 0; 
+}
 
 body {
   font-family: var(--font-main);
   color: var(--text);
   min-height: 100vh;
   position: relative;
-  background: #1e1e2e;  /* dark background */
+  background: #1e1e2e;
   overflow-x: hidden;
 }
 
+/* ============================================================================
+   SECTION 3: LAYOUT STRUCTURE (Container & Wrapper)
+   - Main page layout and content width
+============================================================================ */
 .scroll-wrapper {
   display: flex;
   justify-content: center;
@@ -53,39 +66,33 @@ body {
   z-index: 1;
 }
 
-/* ==========================
-   BACKGROUND GRADIENT ANIMATION
-========================== */
+/* ============================================================================
+   SECTION 4: ANIMATED BACKGROUND GRADIENT
+   - The moving background effect behind everything
+============================================================================ */
 body::before {
-   pointer-events: none;
-   content: '';
-   position: absolute;
-   inset: 0;
-   background: linear-gradient(135deg,
-      #0d0d1a 0%,
-      #0d0d1a 17%,
-      /*#2dba4d 27%, /*test*/
-      #0b0b1f 28%, /*bluepurpdarknight*/
-      /*#2dba4d 38%, /*test*/
-      #1e1e2e 43%, /*graypurp*/
-      /*#2dba4d 48%, /*test*/
-      #2c2c3e 49%, /*ray start*/
-      #7a7aa0 50%, 
-      #1e1e2e 51%,/*ray end*/
-      /*#2dba4d 59%, /*test*/
-      #0d0d1a 59%, /*blue dakr black night*/
-      /*#2dba4d 66%, /*test*/
-      #1e1e2e 69%, /*graypurp*/
-      /*#2dba4d 73%, /*test*/
-      #3a3a4e 74%, /*bluepurp*/
-      /*#2dba4d 80%, /*test*/
-      #0b0b1f 81%, /*bluepurpdarknight*/
-      #0d0d1a 88%, 
-      #0d0d1a 100%
-   );
-   background-size: 800% 800%;
-   z-index: 0;
-   animation: gradientLoop 33s linear infinite;
+  pointer-events: none;
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg,
+    #0d0d1a 0%,
+    #0d0d1a 17%,
+    #0b0b1f 28%,
+    #1e1e2e 43%,
+    #2c2c3e 49%,
+    #7a7aa0 50%, 
+    #1e1e2e 51%,
+    #0d0d1a 59%,
+    #1e1e2e 69%,
+    #3a3a4e 74%,
+    #0b0b1f 81%,
+    #0d0d1a 88%, 
+    #0d0d1a 100%
+  );
+  background-size: 800% 800%;
+  z-index: 0;
+  animation: gradientLoop 33s linear infinite;
 }
 
 @keyframes gradientLoop {
@@ -93,9 +100,10 @@ body::before {
   100% { background-position: 100% 100%; }
 }
 
-/* ==========================
-   PARTICLES
-========================== */
+/* ============================================================================
+   SECTION 5: FLOATING PARTICLES SYSTEM
+   - Stars that float up the screen with depth and flicker effects
+============================================================================ */
 .particles {
   position: fixed;
   top: 0;
@@ -118,73 +126,23 @@ body::before {
     rgba(161,196,253,0.1) 70%,
     transparent 100%
   );
-  
-  /* animations will be applied via JS */
 }
 
-/* floating animation (top → bottom) */
 @keyframes floatParticle {
   0% { transform: translateY(100vh) scale(0.6); opacity: 0; }
   10% { opacity: 1; }
   100% { transform: translateY(-10vh) scale(.6); opacity: var(--base-opacity); }
 }
 
-
-   /* subtle random flicker for stars */
 @keyframes starFlicker {
   0%, 100% { opacity: var(--base-opacity); }
   50% { opacity: calc(var(--base-opacity) * 1.5); }
 }
 
-
-   
-/* ==========================
-   PAGE TITLE
-========================== */
-h1 {
-  font-weight:500;
-  font-size:1.8rem;
-  margin-bottom:20px;
-  letter-spacing:0.6px;
-  color:#eaf2ff;
-  text-shadow: 0 0 6px rgba(161,196,253,0.6),
-               0 0 14px rgba(161,196,253,0.4),
-               0 0 30px rgba(161,196,253,0.15);
-}
-
-/* ==========================
-   ALBUM COVER FLOATING EFFECT
-========================== */
-.album-visualizer {
-  position: relative;
-  width: 100%;
-  max-width: 360px;
-  margin: 0 auto 25px;
-  z-index: 20; 
-}
-
-.album-cover {
-  width: 100%;
-  border-radius: var(--radius);
-  box-shadow: 0 6px 20px rgba(0,0,0,0.4);
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-  animation: floatCover 6s ease-in-out infinite;
-}
-
-.album-cover:hover {
-  transform: scale(1.03);
-  box-shadow: 0 12px 28px rgba(0,0,0,0.45);
-}
-
-@keyframes floatCover {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-6px); }
-}
-
-
-/* ==========================
-   SHOOTING STARS
-========================== */
+/* ============================================================================
+   SECTION 6: SHOOTING STARS
+   - Rare diagonal shooting stars across the screen
+============================================================================ */
 .shooting-stars {
   position: absolute;
   inset: 0;
@@ -214,34 +172,88 @@ h1 {
   }
 }
 
+/* ============================================================================
+   SECTION 7: PAGE TITLE
+   - Main heading with glow effect
+============================================================================ */
+h1 {
+  font-weight: 500;
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+  letter-spacing: 0.6px;
+  color: #eaf2ff;
+  text-shadow: 0 0 6px rgba(161,196,253,0.6),
+               0 0 14px rgba(161,196,253,0.4),
+               0 0 30px rgba(161,196,253,0.15);
+}
 
-   
-/* ==========================
-   TRACKS STYLE
-========================== */
+/* ============================================================================
+   SECTION 8: ALBUM COVER
+   - Floating album artwork with hover effect
+============================================================================ */
+.album-visualizer {
+  position: relative;
+  width: 100%;
+  max-width: 360px;
+  margin: 0 auto 25px;
+  z-index: 20; 
+}
+
+.album-cover {
+  width: 100%;
+  border-radius: var(--radius);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  animation: floatCover 6s ease-in-out infinite;
+}
+
+.album-cover:hover {
+  transform: scale(1.03);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.45);
+}
+
+@keyframes floatCover {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+/* ============================================================================
+   SECTION 9: MUSIC TRACKS
+   - Individual track cards with audio players and loop buttons
+============================================================================ */
 .track {
   background: rgba(255, 255, 255, 0.02);
   border-radius: var(--radius);
-  padding:20px;
-  margin-bottom:20px;
+  padding: 20px;
+  margin-bottom: 20px;
   box-shadow: 0 6px 16px rgba(0,0,0,0.3);
   backdrop-filter: blur(10px);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.track[data-vibe="street"] { border-left:2px solid rgba(120,160,255,0.35); }
-.track:hover { transform:translateY(-2px); box-shadow:0 10px 28px rgba(0,0,0,0.5); }
+.track[data-vibe="street"] { 
+  border-left: 2px solid rgba(120,160,255,0.35); 
+}
 
-.track-title { font-size:1rem; color:var(--muted); margin-bottom:12px; }
+.track:hover { 
+  transform: translateY(-2px); 
+  box-shadow: 0 10px 28px rgba(0,0,0,0.5); 
+}
+
+.track-title { 
+  font-size: 1rem; 
+  color: var(--muted); 
+  margin-bottom: 12px; 
+}
 
 audio {
-  width:100%;
-  outline:none;
-  border-radius:10px;
+  width: 100%;
+  outline: none;
+  border-radius: 10px;
   filter: invert(90%) sepia(5%) saturate(15%) hue-rotate(190deg);
 }
 
-.replay-btn {
+.loop-btn {
   margin-top: 10px;
   background: transparent;
   border: 1px solid rgba(161,196,253,0.35);
@@ -253,67 +265,83 @@ audio {
   transition: all 0.2s ease;
 }
 
-.replay-btn:hover {
+.loop-btn:hover {
   color: var(--accent);
   border-color: var(--accent);
   box-shadow: 0 0 8px rgba(161,196,253,0.35);
 }
 
-
-
-/* ==========================
-   STREET MODE BACKGROUND
-========================== */
+/* ============================================================================
+   SECTION 10: STREET MODE (Alternative Theme)
+   - Different background style for rap/street tracks
+============================================================================ */
 body.street::before {
   background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
               url("graffiti-bg.jpg");
   background-size: cover;
-  background-position:center;
-  animation:none;
+  background-position: center;
+  animation: none;
 }
 
 body.street h1 {
-  color:#dbe7ff;
+  color: #dbe7ff;
   text-shadow: 0 0 4px rgba(120,160,255,0.4),
                0 0 10px rgba(120,160,255,0.2);
 }
 
-body.street .particle { background: rgba(200,200,200,0.2); }
-
-/* ==========================
-   LINKS & FOOTER
-========================== */
-#experimental-link, #back-link { 
-  font-size:0.85rem; color:var(--muted); 
-  margin-bottom:15px; cursor:pointer; text-decoration:underline; 
+body.street .particle { 
+  background: rgba(200,200,200,0.2); 
 }
 
-#experimental-link:hover, #back-link:hover { color: var(--accent); }
+/* ============================================================================
+   SECTION 11: NAVIGATION LINKS
+   - Links to switch between main and experimental tracks
+============================================================================ */
+#experimental-link, 
+#back-link { 
+  font-size: 0.85rem; 
+  color: var(--muted); 
+  margin-bottom: 15px; 
+  cursor: pointer; 
+  text-decoration: underline; 
+}
 
-#babycow-track, #temporary-track, #chavo-track, #kitties-track, #go-girl-track, #back-link { display: none; }
+#experimental-link:hover, 
+#back-link:hover { 
+  color: var(--accent); 
+}
 
-/*====================================
-   ===============================
-   GHOOST COUNTER
-   ==============================
-   ================================*/
+/* Hide experimental tracks and back link by default */
+#babycow-track, 
+#temporary-track, 
+#chavo-track, 
+#kitties-track, 
+#go-girl-track, 
+#back-link { 
+  display: none; 
+}
+
+/* ============================================================================
+   SECTION 12: FOOTER & DECORATIVE ELEMENTS
+   - Copyright info, visitor counter, and site signature
+============================================================================ */
+footer { 
+  margin-top: 30px; 
+  font-size: 0.75rem; 
+  color: var(--muted); 
+  opacity: 0.7; 
+}
+
 .ghost-counter {
   position: fixed;
   bottom: 10px;
   right: 12px;
-  opacity: .15;             /* % visible */
-  transform: scale(.80);    /* normal size */
-  pointer-events: auto;   /* now you can hover/click if needed */
-  z-index: 9999;          /* ensures it’s above everything */
+  opacity: 0.15;
+  transform: scale(0.80);
+  pointer-events: auto;
+  z-index: 9999;
 }
 
-   
-footer { margin-top:30px; font-size:0.75rem; color:var(--muted); opacity:0.7; }
-
-/* ==========================
-   SITE CODE SIGNATURE
-   Bottom-right watermark
-========================== */
 .site-signature {
   position: fixed;
   bottom: 12px;
@@ -322,38 +350,41 @@ footer { margin-top:30px; font-size:0.75rem; color:var(--muted); opacity:0.7; }
   color: var(--muted);
   opacity: 0.35;
   letter-spacing: 0.4px;
-  pointer-events: none; /* never blocks clicks */
+  pointer-events: none;
   z-index: 9998;
 }
 
-/* Slight glow on large screens */
 @media (min-width: 600px) {
   .site-signature {
     text-shadow: 0 0 6px rgba(161,196,253,0.25);
   }
 }
-
-
 </style>
 </head>
 
 <body>
 
-<!-- PARTICLES -->
+<!-- ============================================================================
+     HTML STRUCTURE
+     All visible content organized in logical sections
+============================================================================ -->
+
+<!-- Background particle effects -->
 <div class="particles"></div>
+<div class="shooting-stars"></div>
 
 <div class="scroll-wrapper">
   <div class="container">
 
-    <!-- PAGE TITLE -->
+    <!-- Page Title -->
     <h1 id="site-title">SAINT3V - October 23rd (Unreleased Demo)</h1>
 
-    <!-- ALBUM COVER -->
+    <!-- Album Cover -->
     <div class="album-visualizer">
       <img id="album-cover" src="oct23coverart.jpeg" alt="October 23rd Album Cover" class="album-cover">
     </div>
 
-    <!-- TRACKS -->
+    <!-- Main Track -->
     <div class="track" id="oct23-track" data-vibe="ethereal">
       <div class="track-title">October 23rd (Unreleased Demo)</div>
       <audio controls preload="none">
@@ -362,6 +393,7 @@ footer { margin-top:30px; font-size:0.75rem; color:var(--muted); opacity:0.7; }
       <button class="loop-btn">↺ Loop</button>
     </div>
 
+    <!-- Experimental Tracks (Hidden by default) -->
     <div class="track" id="babycow-track" data-vibe="ethereal-override">
       <div class="track-title">Baby Cow (Unreleased Demo)</div>
       <audio controls preload="none">
@@ -401,12 +433,12 @@ footer { margin-top:30px; font-size:0.75rem; color:var(--muted); opacity:0.7; }
       </audio>
       <button class="loop-btn">↺ Loop</button> 
     </div>  
-     
 
-    <!-- LINKS TO SWITCH TRACKS -->
+    <!-- Navigation Links -->
     <div id="experimental-link">Experimental Tracks</div>
     <div id="back-link">Back to Main Tracks</div>
 
+    <!-- Footer -->
     <footer>
       © 2025-2023 SAINT3V | Indie / Shoegaze / Rap
       <div>Making music while I'm still here.</div>
@@ -415,287 +447,304 @@ footer { margin-top:30px; font-size:0.75rem; color:var(--muted); opacity:0.7; }
   </div>
 </div>
 
-<!-- VISITOR COUNTER -->
+<!-- Visitor Counter -->
 <div class="ghost-counter">
   <img src="https://hitscounter.dev/api/hit?url=https%3A%2F%2Fsdvantage.com%2F&label=Visitors&icon=person-raised-hand&color=%233d8bfd&style=plastic&tz=US%2FPacific">
 </div>
 
-<div class="shooting-stars"></div>
-
+<!-- Site Signature -->
 <div class="site-signature">
   Site code by yours truly — SAINT3V
 </div>
-   
-</body>
-   
+
 <script>
-/* ==========================
-   CREATE FLOATING PARTICLES WITH DEPTH + OPTIONAL STAR FLICKER
-========================== */
-const particleContainer = document.querySelector('.particles');
-const totalParticles = 40;
-const flickerChance = 0.1; // 20% of stars will flicker
+/* ============================================================================
+   JAVASCRIPT SECTION
+   All interactive functionality organized by feature
+============================================================================ */
 
-for (let i = 0; i < totalParticles; i++) {
-  const particle = document.createElement('div');
-  particle.className = 'particle';
+// ============================================================================
+// FEATURE 1: FLOATING PARTICLES
+// Creates animated star particles with depth and optional flicker
+// ============================================================================
+(function createFloatingParticles() {
+  const particleContainer = document.querySelector('.particles');
+  const totalParticles = 40;
+  const flickerChance = 0.1;
 
-  // --------------------------
-  // DEPTH (size controls everything)
-  // --------------------------
-  const depth = Math.random(); // 0 = far, 1 = near
+  for (let i = 0; i < totalParticles; i++) {
+    const particle = document.createElement('div');
+    particle.className = 'particle';
 
-  // size & brightness
-  const size = 2 + depth * 4; // 2–6px
-  particle.style.width = size + 'px';
-  particle.style.height = size + 'px';
-  const baseOpacity = 0.25 + depth * 0.55;
-  particle.style.opacity = baseOpacity;
-  particle.style.setProperty('--base-opacity', baseOpacity);
+    // Calculate depth (0 = far, 1 = near)
+    const depth = Math.random();
+    
+    // Size and brightness based on depth
+    const size = 2 + depth * 4;
+    particle.style.width = size + 'px';
+    particle.style.height = size + 'px';
+    const baseOpacity = 0.25 + depth * 0.55;
+    particle.style.opacity = baseOpacity;
+    particle.style.setProperty('--base-opacity', baseOpacity);
 
-  // horizontal position
-  particle.style.left = Math.random() * 100 + '%';
+    // Random horizontal position
+    particle.style.left = Math.random() * 100 + '%';
 
-  // floating speed based on depth
-  const FAR_DURATION = 25;  // slowest
-  const NEAR_DURATION = 14; // fastest
-  const duration = FAR_DURATION + depth * (NEAR_DURATION - FAR_DURATION);
-  const phaseOffset = Math.random() * duration;
+    // Floating speed based on depth
+    const FAR_DURATION = 25;
+    const NEAR_DURATION = 14;
+    const duration = FAR_DURATION + depth * (NEAR_DURATION - FAR_DURATION);
+    const phaseOffset = Math.random() * duration;
 
-  // --------------------------
-  // BASE ANIMATION (float)
-  // --------------------------
-  let animationString = `floatParticle ${duration}s linear infinite ${-phaseOffset}s`;
+    // Base floating animation
+    let animationString = `floatParticle ${duration}s linear infinite ${-phaseOffset}s`;
 
-  // --------------------------
-  // RANDOM STAR FLICKER
-  // --------------------------
-  if (Math.random() < flickerChance) {
-    const flickerDuration = .1 + Math.random() * .1; // .3-.6
-    const flickerDelay = Math.random() * flickerDuration;
-    animationString += `, starFlicker ${flickerDuration}s steps(1, start) infinite ${-flickerDelay}s`;
-    /*\particle.style.outline = '1px solid red' ; */
+    // Add random flicker to some particles
+    if (Math.random() < flickerChance) {
+      const flickerDuration = 0.1 + Math.random() * 0.1;
+      const flickerDelay = Math.random() * flickerDuration;
+      animationString += `, starFlicker ${flickerDuration}s steps(1, start) infinite ${-flickerDelay}s`;
+    }
+
+    particle.style.animation = animationString;
+    particleContainer.appendChild(particle);
   }
 
-  particle.style.animation = animationString;
-
-  particleContainer.appendChild(particle);
-}
-
-/* ==========================
-   FIX #2 — PAUSE WHEN TAB IS HIDDEN
-========================== */
-document.addEventListener('visibilitychange', () => {
-  const particles = document.querySelectorAll('.particle');
-  const state = document.hidden ? 'paused' : 'running';
-
-  particles.forEach(p => {
-    p.style.animationPlayState = state;
+  // Pause animations when tab is hidden (performance optimization)
+  document.addEventListener('visibilitychange', () => {
+    const particles = document.querySelectorAll('.particle');
+    const state = document.hidden ? 'paused' : 'running';
+    particles.forEach(p => {
+      p.style.animationPlayState = state;
+    });
   });
-});
+})();
 
-   
-/*===========================================
-   Shooting Stars - Rare & Consistent Angle
-===========================================*/
+// ============================================================================
+// FEATURE 2: SHOOTING STARS
+// Rare diagonal shooting stars with consistent angle
+// ============================================================================
+(function initShootingStars() {
+  const shootingStarsContainer = document.querySelector('.shooting-stars');
 
-const shootingStarsContainer = document.querySelector('.shooting-stars');
+  function spawnShootingStar() {
+    const star = document.createElement('div');
+    star.className = 'shooting-star';
 
-function spawnShootingStar() {
-  const star = document.createElement('div');
-  star.className = 'shooting-star';
+    // Random starting position
+    star.style.left = Math.random() * window.innerWidth + 'px';
+    star.style.top = Math.random() * window.innerHeight * 0.8 + 'px';
 
-  // Random starting position (top 80% of viewport)
-  star.style.left = Math.random() * window.innerWidth + 'px';
-  star.style.top = Math.random() * window.innerHeight * 0.8 + 'px';
+    // Random size
+    star.style.height = 60 + Math.random() * 40 + 'px';
+    star.style.width = 1 + Math.random() * 2 + 'px';
 
-  // Random length and width
-  star.style.height = 60 + Math.random() * 40 + 'px'; // 60–100px
-  star.style.width = 1 + Math.random() * 2 + 'px';    // 1–3px
+    // Random duration
+    star.style.animationDuration = 1.8 + Math.random() * 1.7 + 's';
 
-  // Random duration
-  star.style.animationDuration = 1.8 + Math.random() * 1.7 + 's'; // 1.8s–3.5s
+    // Fixed angle for consistency
+    const fixedAngle = 49;
+    star.style.background = `linear-gradient(-${fixedAngle}deg, rgba(255,255,255,1), rgba(255,255,255,0))`;
+    star.style.transform = `rotate(${fixedAngle}deg)`;
 
-  // Fixed angle: top-left → bottom-right
-  const fixedAngle = 49;
-  star.style.background = `linear-gradient(-${fixedAngle}deg, rgba(255,255,255,1), rgba(255,255,255,0))`;
-  star.style.transform = `rotate(${fixedAngle}deg)`;
+    shootingStarsContainer.appendChild(star);
 
-  shootingStarsContainer.appendChild(star);
-
-  // Remove after animation
-  star.addEventListener('animationend', () => star.remove());
-}
-
-// Rare spawns: only a chance every 5–15 seconds
-function startRareShootingStars() {
-  setInterval(() => {
-    if (Math.random() < 0.25) spawnShootingStar(); // 25% chance
-  }, 5000 + Math.random() * 10000); // 5–15s interval
-}
-
-startRareShootingStars();
-
-   
-/* ==========================
-   TRACK PLAY & VIBE SWITCHING
-========================== */
-const tracks = document.querySelectorAll('.track audio');
-const siteTitle = document.getElementById('site-title');
-const defaultTitle = siteTitle.textContent;
-const albumVisualizer = document.querySelector('.album-visualizer');
-
-// Change background "vibe" when a track plays
-function updateVibeOnPlay(audio) {
-  const track = audio.closest('.track');
-  const vibe = track.dataset.vibe;
-
-  if (vibe === 'street') {
-    document.body.classList.add('street');
-  } else {
-    document.body.classList.remove('street');
+    // Remove after animation completes
+    star.addEventListener('animationend', () => star.remove());
   }
-}
 
-// Update title and vibe when track is paused
-function updateVibeOnPause() {
-  const playingTrack = [...tracks].find(a => !a.paused);
-  if (!playingTrack) return;
-  const vibe = playingTrack.closest('.track').dataset.vibe;
-  if (vibe === 'street') document.body.classList.add('street');
-  else document.body.classList.remove('street');
-}
+  // Spawn shooting stars rarely (25% chance every 5-15 seconds)
+  function startRareShootingStars() {
+    setInterval(() => {
+      if (Math.random() < 0.25) spawnShootingStar();
+    }, 5000 + Math.random() * 10000);
+  }
 
-// Track event listeners
-tracks.forEach(audio => {
-  audio.addEventListener('play', () => {
-    // Pause other tracks
-    tracks.forEach(a => { if (a !== audio) a.pause(); });
+  startRareShootingStars();
+})();
 
-    // Update page title
-    const trackName = audio.closest('.track').querySelector('.track-title').textContent;
-    siteTitle.textContent = 'SAINT3V - ' + trackName;
+// ============================================================================
+// FEATURE 3: TRACK PLAYBACK & VIBE SWITCHING
+// Handles music playback, title updates, and background theme changes
+// ============================================================================
+(function setupMusicPlayer() {
+  const tracks = document.querySelectorAll('.track audio');
+  const siteTitle = document.getElementById('site-title');
+  const defaultTitle = siteTitle.textContent;
 
-    // Update vibe
-    updateVibeOnPlay(audio);
+  // Change background vibe based on track type
+  function updateVibeOnPlay(audio) {
+    const track = audio.closest('.track');
+    const vibe = track.dataset.vibe;
+    
+    if (vibe === 'street') {
+      document.body.classList.add('street');
+    } else {
+      document.body.classList.remove('street');
+    }
+  }
 
-    // Media session (optional)
-    if ('mediaSession' in navigator) {
-      navigator.mediaSession.metadata = new MediaMetadata({
-        title: trackName,
-        artist: 'SAINT3V',
-        album: 'October 23rd',
-        artwork: [{ src: 'oct23coverart.jpeg', sizes: '512x512', type: 'image/jpeg' }]
+  // Restore vibe when track is paused
+  function updateVibeOnPause() {
+    const playingTrack = [...tracks].find(a => !a.paused);
+    if (!playingTrack) return;
+    
+    const vibe = playingTrack.closest('.track').dataset.vibe;
+    if (vibe === 'street') {
+      document.body.classList.add('street');
+    } else {
+      document.body.classList.remove('street');
+    }
+  }
+
+  // Set up event listeners for each track
+  tracks.forEach(audio => {
+    audio.addEventListener('play', () => {
+      // Pause all other tracks
+      tracks.forEach(a => { 
+        if (a !== audio) a.pause(); 
       });
-      navigator.mediaSession.setActionHandler('play', () => audio.play());
-      navigator.mediaSession.setActionHandler('pause', () => audio.pause());
-    }
+
+      // Update page title with track name
+      const trackName = audio.closest('.track').querySelector('.track-title').textContent;
+      siteTitle.textContent = 'SAINT3V - ' + trackName;
+
+      // Update background vibe
+      updateVibeOnPlay(audio);
+
+      // Set up media session (for mobile controls)
+      if ('mediaSession' in navigator) {
+        navigator.mediaSession.metadata = new MediaMetadata({
+          title: trackName,
+          artist: 'SAINT3V',
+          album: 'October 23rd',
+          artwork: [{ src: 'oct23coverart.jpeg', sizes: '512x512', type: 'image/jpeg' }]
+        });
+        navigator.mediaSession.setActionHandler('play', () => audio.play());
+        navigator.mediaSession.setActionHandler('pause', () => audio.pause());
+      }
+    });
+
+    audio.addEventListener('pause', () => {
+      const allPaused = [...tracks].every(a => a.paused);
+      if (!allPaused) return;
+
+      // Reset title when all tracks are paused
+      if (isExperimentalMode) {
+        siteTitle.textContent = 'SAINT3V — Experimental Tracks';
+      } else {
+        siteTitle.textContent = defaultTitle;
+      }
+
+      updateVibeOnPause();
+    });
+  });
+})();
+
+// ============================================================================
+// FEATURE 4: LOOP MODE
+// Toggle infinite loop for individual tracks
+// ============================================================================
+(function setupLoopMode() {
+  const loopButtons = document.querySelectorAll('.loop-btn');
+  const loopFlags = new WeakMap(); // Store loop state for each audio element
+  const tracks = document.querySelectorAll('.track audio');
+
+  loopButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const track = btn.closest('.track');
+      const audio = track.querySelector('audio');
+
+      // Toggle loop state
+      const isLooping = loopFlags.get(audio) || false;
+      loopFlags.set(audio, !isLooping);
+
+      // Update button text
+      btn.textContent = !isLooping ? '↺ Loop ON' : '↺ Loop OFF';
+    });
   });
 
-  audio.addEventListener('pause', () => {
-    const allPaused = [...tracks].every(a => a.paused);
-    if (!allPaused) return;
-
-    if (isExperimentalMode) {
-       siteTitle.textContent = 'SAINT3V — Experimental Tracks';
-   } else {
-      siteTitle.textContent = defaultTitle;
-   }
-
-   updateVibeOnPause();
+  // Auto-replay when track ends if loop mode is on
+  tracks.forEach(audio => {
+    audio.addEventListener('ended', () => {
+      if (loopFlags.get(audio)) {
+        audio.currentTime = 0;
+        audio.play();
+      }
+    });
   });
-});
+})();
 
+// ============================================================================
+// FEATURE 5: TRACK SWITCHING (Main ↔ Experimental)
+// Toggle between main track and experimental tracks
+// ============================================================================
+(function setupTrackSwitching() {
+  let isExperimentalMode = false;
+  
+  // Get all elements
+  const oct23Track = document.getElementById('oct23-track');
+  const goGirlTrack = document.getElementById('go-girl-track');
+  const kittiesTrack = document.getElementById('kitties-track');
+  const temporaryTrack = document.getElementById('temporary-track');
+  const babycowTrack = document.getElementById('babycow-track');   
+  const chavoTrack = document.getElementById('chavo-track');
+  const experimentalLink = document.getElementById('experimental-link');
+  const backLink = document.getElementById('back-link');
+  const siteTitle = document.getElementById('site-title');
+  const albumVisualizer = document.querySelector('.album-visualizer');
+  const defaultTitle = siteTitle.textContent;
 
+  // Make isExperimentalMode accessible to other functions
+  window.isExperimentalMode = isExperimentalMode;
 
-/*============================================
-===========================================
-            loop mode
-===========================================
-=============================================*/
-const loopButtons = document.querySelectorAll('.loop-btn'); // new loop toggle
-const loopFlags = new WeakMap(); // store loop state for each audio
-
-loopButtons.forEach(btn => {
-  btn.addEventListener('click', () => {
-    const track = btn.closest('.track');
-    const audio = track.querySelector('audio');
-
-    // Toggle loop state
-    const isLooping = loopFlags.get(audio) || false;
-    loopFlags.set(audio, !isLooping);
-
-    // Update button text
-    btn.textContent = !isLooping ? '↺ Loop ON' : '↺ Loop OFF';
+  // Switch to experimental tracks
+  experimentalLink.addEventListener('click', () => {
+    window.isExperimentalMode = true;
+    
+    document.body.classList.add('street');
+    siteTitle.textContent = 'SAINT3V — Experimental Tracks';
+    
+    // Hide main track and album cover
+    oct23Track.style.display = 'none';
+    albumVisualizer.style.display = 'none';
+    
+    // Show experimental tracks
+    babycowTrack.style.display = 'block';
+    temporaryTrack.style.display = 'block'; 
+    kittiesTrack.style.display = 'block';
+    goGirlTrack.style.display = 'block';
+    chavoTrack.style.display = 'block'; 
+    
+    // Swap navigation links
+    experimentalLink.style.display = 'none';
+    backLink.style.display = 'block';
   });
-});
 
-// Auto-replay when track ends if loop mode is on
-tracks.forEach(audio => {
-  audio.addEventListener('ended', () => {
-    if (loopFlags.get(audio)) {
-      audio.currentTime = 0;
-      audio.play();
-    }
+  // Switch back to main track
+  backLink.addEventListener('click', () => {
+    window.isExperimentalMode = false;
+    
+    document.body.classList.remove('street');
+    siteTitle.textContent = defaultTitle;
+    
+    // Show main track and album cover
+    oct23Track.style.display = 'block';
+    albumVisualizer.style.display = 'block';
+    
+    // Hide experimental tracks
+    babycowTrack.style.display = 'none'; 
+    temporaryTrack.style.display = 'none'; 
+    kittiesTrack.style.display = 'none';
+    goGirlTrack.style.display = 'none';
+    chavoTrack.style.display = 'none'; 
+    
+    // Swap navigation links
+    backLink.style.display = 'none';
+    experimentalLink.style.display = 'block';
   });
-});
-
-
-
-
-   
-/* ==========================
-   SWITCH BETWEEN MAIN & EXPERIMENTAL TRACKS
-========================== */
-let isExperimentalMode = false;
-const oct23Track = document.getElementById('oct23-track');
-const goGirlTrack = document.getElementById('go-girl-track');
-const kittiesTrack = document.getElementById('kitties-track');
-const temporaryTrack = document.getElementById('temporary-track');
-const babycowTrack = document.getElementById('babycow-track');   
-const chavoTrack = document.getElementById('chavo-track');
-const experimentalLink = document.getElementById('experimental-link');
-const backLink = document.getElementById('back-link');
-
-experimentalLink.addEventListener('click', () => {
-  isExperimentalMode = true; 
-   
-  document.body.classList.add('street');
-  siteTitle.textContent = 'SAINT3V — Experimental Tracks';
-   
-  oct23Track.style.display = 'none';
-  babycowTrack.style.display = 'block';
-  temporaryTrack.style.display = 'block'; 
-  kittiesTrack.style.display = 'block';
-  goGirlTrack.style.display = 'block';
-  chavoTrack.style.display = 'block'; 
-
-  albumVisualizer.style.display = 'none'; // ✅ hide cover 
-   
-  experimentalLink.style.display = 'none';
-  backLink.style.display = 'block';
-});
-
-backLink.addEventListener('click', () => {
-  isExperimentalMode = false; 
-   
-  document.body.classList.remove('street');
-  siteTitle.textContent = defaultTitle;
-   
-  oct23Track.style.display = 'block';
-  babycowTrack.style.display = 'none'; 
-  temporaryTrack.style.display = 'none'; 
-  kittiesTrack.style.display = 'none';
-  goGirlTrack.style.display = 'none';
-  chavoTrack.style.display = 'none'; 
-
-  albumVisualizer.style.display = 'block'; // ✅ restore cover 
-   
-  backLink.style.display = 'none';
-  experimentalLink.style.display = 'block';
-});
-
-   
+})();
 </script>
 
+</body>
 </html>
